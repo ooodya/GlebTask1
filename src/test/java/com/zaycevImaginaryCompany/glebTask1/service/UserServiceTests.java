@@ -2,9 +2,12 @@ package com.zaycevImaginaryCompany.glebTask1.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
+import org.assertj.core.util.Arrays;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -19,6 +22,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 import com.zaycevImaginaryCompany.glebTask1.config.ServiceTestConfig;
+import com.zaycevImaginaryCompany.glebTask1.domain.Account;
 import com.zaycevImaginaryCompany.glebTask1.domain.User;
 import com.zaycevImaginaryCompany.glebTask1.repository.UserRepository;
 
@@ -45,6 +49,15 @@ public class UserServiceTests
 	private User user2 = new User(lastname2, firstname2, username2);
 	private User user3 = new User(lastname3, firstname3, username3);
 	
+	private int amount1 = 1000;
+	private long accountNumber1 = 12345;
+	
+	private int amount2 = 5000;
+	private long accountNumber2 = 67890;
+	
+	private Account acc1 = new Account(user3, amount1, accountNumber1);
+	private Account acc2 = new Account(user3, amount2, accountNumber2);
+	
 	@Autowired
 	private UserService uService;
 	
@@ -59,7 +72,7 @@ public class UserServiceTests
 	@Test
 	void findByUsernameReturnCorrectValue()
 	{
-		Optional<User> user = uService.findByUserName(username1);
+		Optional<User> user = uService.findByUsername(username1);
 		
 		assertEquals(Optional.of(user1), user);
 	}
@@ -71,5 +84,17 @@ public class UserServiceTests
 		List<User> expectedUsers = Collections.singletonList(user2);
 		
 		assertThat(users, is(expectedUsers));
+	}
+	
+	@Test
+	void testThatSavingUsertAlsoSavesAccounts()
+	{
+		Optional<User> user = uService.findByUsername(username3);
+		Optional<Set<Account>> accs = user.map(User::getAccounts);
+		
+		Set<Account> myAccs = new HashSet<>();
+		myAccs.add(acc1);
+		myAccs.add(acc2);
+		assertEquals(Optional.of(myAccs), accs);
 	}
 }

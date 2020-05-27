@@ -52,4 +52,12 @@ public class AccountServiceTests
 		
 		assertEquals(Optional.of(acc1), account);
 	}
+	
+	@Test
+	void testThatSavingAccountAlsoSavesOwner()
+	{
+		Optional<Account> account = accService.findByAccountNumber(accountNumber1);
+		Optional<User> owner = account.map(Account::getOwner);
+		assertEquals(Optional.of(owner1), owner);
+	}
 }

@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.zaycevImaginaryCompany.glebTask1.domain.Account;
 import com.zaycevImaginaryCompany.glebTask1.domain.User;
 import com.zaycevImaginaryCompany.glebTask1.repository.AccountRepository;
+import com.zaycevImaginaryCompany.glebTask1.repository.UserRepository;
 
 @Service
 @Transactional
@@ -20,7 +21,7 @@ public class AccountServiceImpl implements AccountService
 	private AccountRepository accountRepository;
 	
 	@Autowired
-	private UserService userService;
+	private UserRepository userRepository;
 	
 	@Override
 	@Transactional(readOnly = true)
@@ -48,10 +49,10 @@ public class AccountServiceImpl implements AccountService
 	@Override
 	public Account save(Account account)
 	{
-		Optional<User> owner = userService.findByUserName(account.getOwner().getUsername());
+		Optional<User> owner = userRepository.findByUsername(account.getOwner().getUsername());
 		if (!owner.isPresent())
 		{
-			userService.save(account.getOwner());
+			userRepository.save(account.getOwner());
 		}
 		
 		return accountRepository.save(account);
