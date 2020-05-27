@@ -33,7 +33,7 @@ public class User implements Serializable
 	
 	private String username;
 
-	public User(String firstname, String lastname, String username)
+	public User(String lastname, String firstname, String username)
 	{
 		this.firstname = firstname;
 		this.lastname = lastname;
