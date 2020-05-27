@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+import org.springframework.lang.NonNull;
+
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,10 +29,13 @@ public class User implements Serializable
 	@GeneratedValue
 	private Long id;
 	
+	@NonNull
 	private String firstname;
 	
+	@NonNull
 	private String lastname;
 	
+	@NonNull
 	private String username;
 
 	public User(String lastname, String firstname, String username)
