@@ -17,8 +17,8 @@ public interface UserService
 
 	Optional<User> findById(Long id);
 
-	User save(User singer);
+	User save(User user);
 
-	void delete(User singer);
+	void delete(User user);
 
 }

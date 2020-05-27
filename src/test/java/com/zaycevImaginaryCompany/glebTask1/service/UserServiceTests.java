@@ -20,6 +20,7 @@ import static org.hamcrest.Matchers.is;
 
 import com.zaycevImaginaryCompany.glebTask1.config.ServiceTestConfig;
 import com.zaycevImaginaryCompany.glebTask1.domain.User;
+import com.zaycevImaginaryCompany.glebTask1.repository.UserRepository;
 
 
 @ExtendWith(SpringExtension.class)

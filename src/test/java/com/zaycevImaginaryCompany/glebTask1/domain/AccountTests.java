@@ -8,18 +8,18 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
-public class BankAccountTests
+public class AccountTests
 {
 	@Test
-	void testBankAccountSettersAndGettersAreWorking()
+	void testAccountSettersAndGettersAreWorking()
 	{
 		User owner = new User("Patrik", "John", "JohnnyGuitar");
 		long accountNumber = 123456789;
 		int amount = 1000;
 		
-		BankAccount acc = new BankAccount();
+		Account acc = new Account();
 		acc.setAccountNumber(accountNumber);
-		acc.setOwner(owner);
+		acc.addOwner(owner);
 		acc.setAmount(amount);
 		
 		assertThat(owner, is(acc.getOwner()));
@@ -28,13 +28,13 @@ public class BankAccountTests
 	}
 	
 	@Test
-	void testBankAccountConstructorIsWorking()
+	void testAccountConstructorIsWorking()
 	{
 		User owner = new User("Patrik", "John", "JohnnyGuitar");
 		long accountNumber = 123456789;
 		int amount = 1000;
 		
-		BankAccount acc = new BankAccount(owner, amount, accountNumber);
+		Account acc = new Account(owner, amount, accountNumber);
 		
 		assertThat(owner, is(acc.getOwner()));
 		assertThat(accountNumber, is(acc.getAccountNumber()));
