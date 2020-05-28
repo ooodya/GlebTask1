@@ -11,6 +11,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotBlank;
 
 import lombok.AccessLevel;
 import lombok.Data;
@@ -39,9 +40,12 @@ public class User implements Serializable
 	private String lastname;
 	
 	@Column(unique = true, nullable = false)
+	@NotBlank(message = "${validation.user.username.empty}")
 	private String username;
 	
 	@Column(nullable = false)
+	//@NotBlank(message = "${validation.user.password.empty}")
+	@NotBlank(message = "HELLO")
 	private String password;
 	
 	@Setter(AccessLevel.NONE)
