@@ -40,12 +40,11 @@ public class User implements Serializable
 	private String lastname;
 	
 	@Column(unique = true, nullable = false)
-	@NotBlank(message = "${validation.user.username.empty}")
+	@NotBlank(message = "{validation.user.username.empty}")
 	private String username;
 	
 	@Column(nullable = false)
-	//@NotBlank(message = "${validation.user.password.empty}")
-	@NotBlank(message = "HELLO")
+	@NotBlank(message = "{validation.user.password.empty}")
 	private String password;
 	
 	@Setter(AccessLevel.NONE)
