@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -35,18 +34,19 @@ public class User implements Serializable
 	@GeneratedValue
 	private Long id;
 	
-	@Column(nullable = false)
 	private String firstname;
 	
-	@Column(nullable = false)
 	private String lastname;
 	
 	@Column(unique = true, nullable = false)
 	private String username;
 	
+	@Column(nullable = false)
+	private String password;
+	
 	@Setter(AccessLevel.NONE)
 	@Getter(AccessLevel.NONE)
-	@OneToMany(mappedBy = "owner", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "owner", fetch = FetchType.EAGER)
 	private Set<Account> accounts = new HashSet<>();
 
 	public User(String lastname, String firstname, String username)
@@ -54,6 +54,12 @@ public class User implements Serializable
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.username = username;
+	}
+	
+	public User(String lastname, String firstname, String username, String password)
+	{
+		this(lastname, firstname, username);
+		this.password = password;
 	}
 	
 	public void addAccount(Account account)

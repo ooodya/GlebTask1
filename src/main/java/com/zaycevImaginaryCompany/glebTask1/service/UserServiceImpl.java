@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.zaycevImaginaryCompany.glebTask1.domain.Account;
 import com.zaycevImaginaryCompany.glebTask1.domain.User;
+import com.zaycevImaginaryCompany.glebTask1.repository.AccountRepository;
 import com.zaycevImaginaryCompany.glebTask1.repository.UserRepository;
 
 @Service
@@ -17,6 +19,9 @@ public class UserServiceImpl implements UserService
 {
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private AccountRepository accountRepository;
 	
 	@Override
 	@Transactional(readOnly = true)
@@ -62,7 +67,17 @@ public class UserServiceImpl implements UserService
 	@Override
 	public User save(User user)
 	{
-		return userRepository.save(user);
+		User retVal = userRepository.save(user);
+		
+		for (Account acc : user.getAccounts())
+		{
+			Optional<Account> persistedAcc = accountRepository.findByAccountNumber(acc.getAccountNumber());
+			if (!persistedAcc.isPresent())
+			{
+				accountRepository.save(acc);
+			}
+		}
+		return retVal;
 	}
 
 	@Override

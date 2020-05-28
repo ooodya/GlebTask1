@@ -27,7 +27,7 @@ public class AccountServiceTests
 	@Autowired
 	private AccountService accService;
 	
-	private User owner1 = new User("Patrik", "John", "JohnnyGuitar");
+	private User owner1 = new User("Patrik", "John", "JohnnyGuitar", "11");
 	
 	private int amount1 = 1000;
 	private long accountNumber1 = 12345;
