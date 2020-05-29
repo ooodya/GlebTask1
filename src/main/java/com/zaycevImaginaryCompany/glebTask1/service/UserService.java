@@ -3,9 +3,11 @@ package com.zaycevImaginaryCompany.glebTask1.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.security.core.userdetails.UserDetailsService;
+
 import com.zaycevImaginaryCompany.glebTask1.domain.User;
 
-public interface UserService
+public interface UserService extends UserDetailsService
 {
 	List<User> findAll();
 
@@ -17,7 +19,7 @@ public interface UserService
 
 	Optional<User> findById(Long id);
 
-	User save(User user);
+	boolean save(User user);
 
 	void delete(User user);
 

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+	<h1
+		th:text="${'Hello ' + user.getFirstname() + ' ' + user.getLastname()}"></h1>
+	<p></p>
+
+	<select th:field="*{accounts}">
+		<option value="">Select Account</option>
+		<option th:each="account : ${accounts}"
+			th:value="${account.getAccountNumber()}"
+			th:text="${account.getAccountNumber()}"></option>
+	</select>
+	<p></p>
+	<form action="#" class="button" th:action="@{/userAddAccount}" th:object="${user}" method="POST">
+		<input type="submit" value="Add account" />
+	</form>
+
+</body>
+</html>

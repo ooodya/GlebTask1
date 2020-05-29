@@ -14,7 +14,6 @@ import com.zaycevImaginaryCompany.glebTask1.config.ValidationConfig;
 @SpringBootApplication
 @EnableJpaRepositories("com.zaycevImaginaryCompany.glebTask1.repository")
 @EntityScan("com.zaycevImaginaryCompany.glebTask1.domain")
-@Import(ValidationConfig.class)
 @PropertySource("classpath:messages.properties")
 public class GlebTask1Application implements ApplicationRunner
 {

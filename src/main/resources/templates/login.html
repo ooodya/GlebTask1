@@ -2,6 +2,22 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <body>
-    <p th:text="'Çהוסü ןנמגונÿולסÿ'"> </p>
-</body>
+	<h1>Type in your username and password</h1>
+    <p> </p>
+    <form action="#" th:action="@{/login}" th:object="${userPass}" method="post">
+    	<p>
+    		Username: <input type="text" th:field="*{username}" />
+    		<span style="color:red" class="error" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span>
+    	</p>
+    	<p>
+    		Password: <input type="text" th:field="*{password}" />
+    		<span style="color:red" class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+    	</p>
+    	<p><input type="submit" value="Log in" /></p>
+    </form>
+    
+    <p> 
+    	<span style="color:red" th:text="${userDoesntExistErrorMessage}"></span>
+    </p>
+    
 </html>
