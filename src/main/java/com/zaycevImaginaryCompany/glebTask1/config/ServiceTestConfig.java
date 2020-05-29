@@ -34,7 +34,6 @@ public class ServiceTestConfig
 		try
 		{
 			EmbeddedDatabaseBuilder dbBuilder = new EmbeddedDatabaseBuilder();
-			//return dbBuilder.setType(EmbeddedDatabaseType.H2).addScript("classpath:sqlScripts/testDataH2.sql").build();
 			return dbBuilder.setType(EmbeddedDatabaseType.H2).build();
 		}
 		catch (Exception e)

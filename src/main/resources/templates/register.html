@@ -2,6 +2,11 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <body>
+	<a th:href="@{/}">
+   		<button>StartPage</button>
+	</a>
+	<p> </p>
+
 	<h1>Fill the form with correct information</h1>
     <p> </p>
     <form action="#" th:action="@{/register}" th:object="${user}" method="post">
