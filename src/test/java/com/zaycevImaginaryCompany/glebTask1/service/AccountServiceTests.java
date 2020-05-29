@@ -35,8 +35,8 @@ public class AccountServiceTests
 	private int amount2 = 5000;
 	private long accountNumber2 = 67890;
 	
-	private Account acc1 = new Account(owner1, amount1, accountNumber1);
-	private Account acc2 = new Account(owner1, amount2, accountNumber2);
+	private Account acc1 = new Account(accountNumber1, owner1, amount1);
+	private Account acc2 = new Account(accountNumber2, owner1, amount2);
 	
 	@BeforeAll
 	void init()

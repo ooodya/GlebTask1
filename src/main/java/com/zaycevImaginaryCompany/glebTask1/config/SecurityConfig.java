@@ -7,6 +7,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.zaycevImaginaryCompany.glebTask1.service.UserService;
 
@@ -33,6 +34,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
 		.formLogin()
 			.loginPage("/login").defaultSuccessUrl("/userAccounts", true)
 			.permitAll();
+		
+		http.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+			.logoutSuccessUrl("/").deleteCookies("JSESSIONID").invalidateHttpSession(true); 
 		
 		http.csrf().disable();
 		http.headers().frameOptions().disable();

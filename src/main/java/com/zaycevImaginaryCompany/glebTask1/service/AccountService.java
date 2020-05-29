@@ -13,7 +13,7 @@ public interface AccountService
 
 	Optional<Account> findById(Long id);
 
-	Account save(Account account);
+	boolean save(Account account);
 
 	void delete(Account account);
 }

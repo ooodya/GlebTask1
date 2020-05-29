@@ -28,17 +28,25 @@ public class Account
 	protected User owner;
 	
 	@Column(unique = true)
+	@Setter(AccessLevel.NONE)
 	private long accountNumber;
 	
 	protected int amount;
-		
-	public Account(User owner, int amount, long accountNumber)
+	
+	public Account(long accountNumber, User owner)
 	{
 		
 		this.owner = owner;
-		this.amount = amount;
+		this.amount = 0;
 		this.accountNumber = accountNumber;
 		
+		owner.addAccount(this);
+	}
+	
+	public Account(long accountNumber, User owner, int amount)
+	{
+		this(accountNumber, owner);
+		this.amount = amount;
 		owner.addAccount(this);
 	}
 	

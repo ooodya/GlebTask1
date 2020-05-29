@@ -2,8 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <body>
-	<a th:href="@{/}">
-   		<button>StartPage</button>
+	<a th:href="@{/logout}">
+   		<button>Log out</button>
 	</a>
 	<p> </p>
 
@@ -18,7 +18,7 @@
 			th:text="${account.getAccountNumber()}"></option>
 	</select>
 	<p></p>
-	<form action="#" class="button" th:action="@{/userAccounts}" th:object="${user}" method="POST">
+	<form action="#" class="button" th:action="@{/addAccount}" th:object="${user}" method="POST">
 		<input type="submit" value="Add account" />
 	</form>
 </body>

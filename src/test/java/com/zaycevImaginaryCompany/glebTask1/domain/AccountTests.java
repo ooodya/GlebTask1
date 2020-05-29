@@ -5,7 +5,6 @@ import static org.hamcrest.Matchers.is;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
@@ -18,9 +17,7 @@ public class AccountTests
 		long accountNumber = 123456789;
 		int amount = 1000;
 		
-		Account acc = new Account();
-		acc.setAccountNumber(accountNumber);
-		acc.addOwner(owner);
+		Account acc = new Account(accountNumber, owner);
 		acc.setAmount(amount);
 		
 		assertThat(owner, is(acc.getOwner()));
@@ -35,7 +32,7 @@ public class AccountTests
 		long accountNumber = 123456789;
 		int amount = 1000;
 		
-		Account acc = new Account(owner, amount, accountNumber);
+		Account acc = new Account(accountNumber, owner, amount);
 		
 		assertThat(owner, is(acc.getOwner()));
 		assertThat(accountNumber, is(acc.getAccountNumber()));

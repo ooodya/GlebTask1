@@ -47,7 +47,7 @@ public class AccountServiceImpl implements AccountService
 	}
 
 	@Override
-	public Account save(Account account)
+	public boolean save(Account account)
 	{
 		Optional<User> owner = userRepository.findByUsername(account.getOwner().getUsername());
 		if (!owner.isPresent())
@@ -55,7 +55,13 @@ public class AccountServiceImpl implements AccountService
 			userRepository.save(account.getOwner());
 		}
 		
-		return accountRepository.save(account);
+		Account dbAccount = accountRepository.findByAccountNumber(account.getAccountNumber()).orElse(null);
+		if (dbAccount != null)
+		{
+			return false;
+		}
+		accountRepository.save(account);
+		return true;
 	}
 
 	@Override

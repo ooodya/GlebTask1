@@ -1,5 +1,7 @@
 package com.zaycevImaginaryCompany.glebTask1.controller;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -21,20 +23,6 @@ public class UserAccsController
 	@Autowired
 	private UserService uService;
 	
-//	@PostMapping("/userAddAccount")
-//	public String addAccountToUser(Model model)
-//	{
-//		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//		
-//		return "userAccounts";
-//	}
-	//
-//	@GetMapping("/userAddAccount")
-//	public String showAddAccountToUser(Model model)
-//	{
-//		return "startpage";
-//	}
-	
 	@GetMapping("/userAccounts")
 	public String getUserAccounts(Model model)
 	{
@@ -44,16 +32,28 @@ public class UserAccsController
 		return "userAccounts";
 	}
 	
-	@PostMapping("/userAccounts")
+	@PostMapping("/addAccount")
 	public String addAccountToUser(Model model)
 	{
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		User dbUser = uService.findByUsername(user.getUsername()).orElse(null);
 		if (dbUser != null)
 		{
-			aService.save(new Account(dbUser, 1000, 10000000));
+			long accNum = generateAccountNumber();
+			aService.save(new Account(accNum, dbUser));
 			model.addAttribute("user", dbUser);
 		}
 		return "userAccounts";
+	}
+	
+	private long generateAccountNumber()
+	{
+		long accNum = ThreadLocalRandom.current().nextLong(1000000L, 9999999L);
+		while (aService.findByAccountNumber(accNum).isPresent())
+		{
+			accNum = ThreadLocalRandom.current().nextLong(1000000L, 9999999L);
+		}
+		
+		return accNum;
 	}
 }

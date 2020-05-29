@@ -56,8 +56,8 @@ public class UserServiceTests
 	private int amount2 = 5000;
 	private long accountNumber2 = 6060;
 	
-	private Account acc1 = new Account(user3, amount1, accountNumber1);
-	private Account acc2 = new Account(user3, amount2, accountNumber2);
+	private Account acc1 = new Account(accountNumber1, user3, amount1);
+	private Account acc2 = new Account(accountNumber2, user3, amount2);
 	
 	@Autowired
 	private UserService uService;
