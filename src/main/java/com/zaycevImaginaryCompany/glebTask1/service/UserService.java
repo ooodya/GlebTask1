@@ -3,11 +3,9 @@ package com.zaycevImaginaryCompany.glebTask1.service;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.security.core.userdetails.UserDetailsService;
-
 import com.zaycevImaginaryCompany.glebTask1.domain.User;
 
-public interface UserService extends UserDetailsService
+public interface UserService
 {
 	List<User> findAll();
 

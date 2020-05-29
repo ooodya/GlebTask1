@@ -1,7 +1,6 @@
 package com.zaycevImaginaryCompany.glebTask1.domain;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
@@ -12,12 +11,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
-
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import lombok.AccessLevel;
 import lombok.Data;
@@ -28,7 +22,7 @@ import lombok.Setter;
 @Data
 @NoArgsConstructor
 @Entity
-public class User implements Serializable, UserDetails
+public class User implements Serializable
 {
 
 	/**
@@ -58,13 +52,8 @@ public class User implements Serializable, UserDetails
 	@OneToMany(mappedBy = "owner", fetch = FetchType.EAGER)
 	private Set<Account> accounts = new HashSet<>();
 	
-	@Transient
-	private final Set<GrantedAuthority> authorities = new HashSet<>();
-
 	public User(String lastname, String firstname, String username)
 	{
-		authorities.add(new SimpleGrantedAuthority("USER"));
-		
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.username = username;
@@ -146,36 +135,5 @@ public class User implements Serializable, UserDetails
 		return "User [id=" + id + ", firstname=" + firstname + ", lastname=" + lastname + ", username=" + username
 				+ "]";
 	}
-
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities()
-	{
-		return authorities;
-	}
-
-	@Override
-	public boolean isAccountNonExpired()
-	{
-		return true;
-	}
-
-	@Override
-	public boolean isAccountNonLocked()
-	{
-		return true;
-	}
-
-	@Override
-	public boolean isCredentialsNonExpired()
-	{
-		return true;
-	}
-
-	@Override
-	public boolean isEnabled()
-	{
-		return true;
-	}
-
 	
 }

@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import com.zaycevImaginaryCompany.glebTask1.domain.User;
+import com.zaycevImaginaryCompany.glebTask1.security.SecurityService;
 import com.zaycevImaginaryCompany.glebTask1.service.UserService;
 
 @Controller
@@ -18,6 +19,9 @@ public class UserController
 {
 	@Autowired
 	private UserService uService;
+	
+	@Autowired
+	private SecurityService securityService;
 
 	@Value("${validation.user.username.alreadyExists}")
 	private String usernameExistsErrorMessage;
@@ -48,7 +52,9 @@ public class UserController
 			return "register";
 		}
 		
+		securityService.autoLogin(user.getUsername(), user.getPassword());
 		model.addAttribute("user", user);
+		
 		return "userAccounts";
 	}
 	

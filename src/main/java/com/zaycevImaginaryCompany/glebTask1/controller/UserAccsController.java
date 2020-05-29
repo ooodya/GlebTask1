@@ -3,7 +3,6 @@ package com.zaycevImaginaryCompany.glebTask1.controller;
 import java.util.concurrent.ThreadLocalRandom;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.zaycevImaginaryCompany.glebTask1.domain.Account;
 import com.zaycevImaginaryCompany.glebTask1.domain.User;
+import com.zaycevImaginaryCompany.glebTask1.security.SecurityService;
 import com.zaycevImaginaryCompany.glebTask1.service.AccountService;
 import com.zaycevImaginaryCompany.glebTask1.service.UserService;
 
@@ -18,16 +18,19 @@ import com.zaycevImaginaryCompany.glebTask1.service.UserService;
 public class UserAccsController
 {
 	@Autowired
-	private AccountService aService;
+	private AccountService accountService;
 	
 	@Autowired
-	private UserService uService;
+	private UserService userService;
+	
+	@Autowired
+	private SecurityService securityService;
 	
 	@GetMapping("/userAccounts")
 	public String getUserAccounts(Model model)
 	{
-		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		User dbUser = uService.findByUsername(user.getUsername()).orElse(null);
+		String username = securityService.getLoggedInUsername();
+		User dbUser = userService.findByUsername(username).orElse(null);
 		model.addAttribute("user", dbUser);
 		return "userAccounts";
 	}
@@ -35,12 +38,12 @@ public class UserAccsController
 	@PostMapping("/addAccount")
 	public String addAccountToUser(Model model)
 	{
-		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		User dbUser = uService.findByUsername(user.getUsername()).orElse(null);
+		String username = securityService.getLoggedInUsername();
+		User dbUser = userService.findByUsername(username).orElse(null);
 		if (dbUser != null)
 		{
 			long accNum = generateAccountNumber();
-			aService.save(new Account(accNum, dbUser));
+			accountService.save(new Account(accNum, dbUser));
 			model.addAttribute("user", dbUser);
 		}
 		return "userAccounts";
@@ -49,7 +52,7 @@ public class UserAccsController
 	private long generateAccountNumber()
 	{
 		long accNum = ThreadLocalRandom.current().nextLong(1000000L, 9999999L);
-		while (aService.findByAccountNumber(accNum).isPresent())
+		while (accountService.findByAccountNumber(accNum).isPresent())
 		{
 			accNum = ThreadLocalRandom.current().nextLong(1000000L, 9999999L);
 		}
