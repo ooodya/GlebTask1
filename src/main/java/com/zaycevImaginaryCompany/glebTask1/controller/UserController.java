@@ -49,7 +49,6 @@ public class UserController
 		}
 		
 		model.addAttribute("user", user);
-		model.addAttribute("accounts", new HashSet<>());
 		return "userAccounts";
 	}
 	
