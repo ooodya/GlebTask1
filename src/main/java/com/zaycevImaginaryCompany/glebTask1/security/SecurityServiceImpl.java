@@ -20,10 +20,10 @@ public class SecurityServiceImpl implements SecurityService
 	@Override
 	public String getLoggedInUsername()
 	{
-		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		if (userDetails instanceof UserDetails)
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		if (principal instanceof UserDetails)
 		{
-			return ((UserDetails) userDetails).getUsername();
+			return ((UserDetails) principal).getUsername();
 		}
 
 		return null;

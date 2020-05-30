@@ -1,6 +1,5 @@
 package com.zaycevImaginaryCompany.glebTask1.controller;
 
-import java.util.HashSet;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +28,11 @@ public class UserController
 	@GetMapping("/")
 	public String goToStartingPage(Model model)
 	{
+		String username = securityService.getLoggedInUsername();
+		if (username != null)
+		{
+			model.addAttribute("userLogged", "userLogged");
+		}
 		return "startpage";
 	}
 

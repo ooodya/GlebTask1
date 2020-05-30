@@ -3,13 +3,26 @@
 
 <body>
 	<p th:text="#{templates.welcome}"> </p>
-	<p> </p>
-	<a th:href="@{/register}">
-   		<button>Register</button>
-	</a>
-	<p> </p>
-	<a th:href="@{/login}">
-   		<button>Log in</button>
-	</a>
+	<p></p>
+	
+	<div th:if="${userLogged == null}">
+		<a th:href="@{/register}">
+	   		<button>Register</button>
+		</a>
+		<p></p>
+		<a th:href="@{/login}">
+	   		<button>Log in</button>
+		</a>
+	</div>
+	
+	<div th:if="${userLogged != null}">
+		<a th:href="@{/logout}">
+   			<button>Log out</button>
+		</a>
+		<p></p>
+		<a th:href="@{/userAccounts}">
+   			<button>My accounts</button>
+		</a>
+	</div>
 </body>
 </html>

@@ -5,11 +5,9 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
-import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-import com.zaycevImaginaryCompany.glebTask1.config.ValidationConfig;
 
 @SpringBootApplication
 @EnableJpaRepositories("com.zaycevImaginaryCompany.glebTask1.repository")

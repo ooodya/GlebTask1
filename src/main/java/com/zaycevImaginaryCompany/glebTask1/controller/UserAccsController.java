@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.zaycevImaginaryCompany.glebTask1.domain.Account;
 import com.zaycevImaginaryCompany.glebTask1.domain.User;
@@ -33,6 +34,22 @@ public class UserAccsController
 		User dbUser = userService.findByUsername(username).orElse(null);
 		model.addAttribute("user", dbUser);
 		return "userAccounts";
+	}
+	
+	@PostMapping("/chooseAccount")
+	public String chooseAccount(@RequestParam("chosenAccount") String chosenAccount, Model model)
+	{
+		long accNumber = Long.parseLong(chosenAccount);
+		Account account = accountService.findByAccountNumber(accNumber).orElse(null);
+		if (account != null)
+		{
+			model.addAttribute("account", account);
+		}
+		else
+		{
+			model.addAttribute("account", new Account());
+		}
+		return "account";
 	}
 	
 	@PostMapping("/addAccount")
