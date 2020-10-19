@@ -2,14 +2,10 @@ package com.zaycevImaginaryCompany.task.domain;
 
 import static org.junit.Assert.assertEquals;
 
-import org.junit.Test;
-
-import com.zaycevImaginaryCompany.task.domain.Account;
-import com.zaycevImaginaryCompany.task.domain.User;
+import org.junit.jupiter.api.Test;
 
 public class UserTests
 {
-	@Test
 	public void testUserSettersAndGettersAreWorking()
 	{
 		User user = new User();

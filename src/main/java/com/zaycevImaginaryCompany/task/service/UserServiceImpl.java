@@ -86,10 +86,11 @@ public class UserServiceImpl implements UserService
 			Optional<Account> persistedAcc = accountRepository.findByAccountNumber(acc.getAccountNumber());
 			if (!persistedAcc.isPresent())
 			{
+				acc.addOwner(userForSaving);
 				accountRepository.save(acc);
 			}
 		}
-
+		
 		return true;
 	}
 

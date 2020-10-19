@@ -67,6 +67,7 @@ public class AccountServiceImpl implements AccountService
 	@Override
 	public void delete(Account account)
 	{
+		account.getOwner().deleteAccount(account);
 		accountRepository.delete(account);
 	}
 

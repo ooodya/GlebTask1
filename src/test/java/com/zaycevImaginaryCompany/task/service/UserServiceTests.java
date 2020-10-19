@@ -7,28 +7,20 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
-import org.junit.jupiter.api.TestInstance.Lifecycle;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 import com.zaycevImaginaryCompany.task.domain.Account;
 import com.zaycevImaginaryCompany.task.domain.User;
-import com.zaycevImaginaryCompany.task.service.UserService;
 
 
-@ExtendWith(SpringExtension.class)
-//@ContextConfiguration(classes = {ServiceTestConfig.class})
-@ActiveProfiles("test")
-@TestInstance(Lifecycle.PER_CLASS)
+@SpringBootTest
 public class UserServiceTests
 {
 	private String username1 = "Glebao";
@@ -62,12 +54,20 @@ public class UserServiceTests
 	@Autowired
 	private UserService uService;
 	
-	@BeforeAll
+	@BeforeEach
 	void init()
 	{
 		uService.save(user1);
 		uService.save(user2);
 		uService.save(user3);
+	}
+	
+	@AfterEach
+	void delete()
+	{
+		uService.delete(user1);
+		uService.delete(user2);
+		uService.delete(user3);
 	}
 		
 	@Test
@@ -84,7 +84,7 @@ public class UserServiceTests
 		List<User> users = uService.findByLastnameAndFirstname(lastname2, firstname2);
 		List<User> expectedUsers = Collections.singletonList(user2);
 		
-		assertThat(users, is(expectedUsers));
+		assertThat(expectedUsers, is(users));
 	}
 	
 	@Test

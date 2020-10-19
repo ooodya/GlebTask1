@@ -3,10 +3,7 @@ package com.zaycevImaginaryCompany.task.domain;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-import org.junit.Test;
-
-import com.zaycevImaginaryCompany.task.domain.Account;
-import com.zaycevImaginaryCompany.task.domain.User;
+import org.junit.jupiter.api.Test;
 
 public class AccountTests
 {

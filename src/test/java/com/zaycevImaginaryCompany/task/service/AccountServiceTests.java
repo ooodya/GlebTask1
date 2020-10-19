@@ -4,27 +4,23 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.Optional;
 
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
-import org.junit.jupiter.api.TestInstance.Lifecycle;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import com.zaycevImaginaryCompany.task.domain.Account;
 import com.zaycevImaginaryCompany.task.domain.User;
-import com.zaycevImaginaryCompany.task.service.AccountService;
 
-@ExtendWith(SpringExtension.class)
-//@ContextConfiguration(classes = {ServiceTestConfig.class})
-@ActiveProfiles("test")
-@TestInstance(Lifecycle.PER_CLASS)
+@SpringBootTest
 public class AccountServiceTests
 {
 	@Autowired
 	private AccountService accService;
+	
+	@Autowired
+	private UserService uService;
 	
 	private User owner1 = new User("Patrik", "John", "JohnnyGuitar", "11");
 	
@@ -37,15 +33,21 @@ public class AccountServiceTests
 	private Account acc1 = new Account(accountNumber1, owner1, amount1);
 	private Account acc2 = new Account(accountNumber2, owner1, amount2);
 	
-	@BeforeAll
+	@BeforeEach
 	void init()
 	{
 		accService.save(acc1);
 		accService.save(acc2);
 	}
 	
+	@AfterEach
+	void delete()
+	{
+		uService.delete(owner1);
+	}
+		
 	@Test
-	void findByAccountNumberReturnCorrectValue()
+	public void findByAccountNumberReturnCorrectValue()
 	{
 		Optional<Account> account = accService.findByAccountNumber(accountNumber1);
 		
@@ -53,7 +55,7 @@ public class AccountServiceTests
 	}
 	
 	@Test
-	void testThatSavingAccountAlsoSavesOwner()
+	public void testThatSavingAccountAlsoSavesOwner()
 	{
 		Optional<Account> account = accService.findByAccountNumber(accountNumber1);
 		Optional<User> owner = account.map(Account::getOwner);
