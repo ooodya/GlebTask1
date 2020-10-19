@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+	<a th:href="@{/}">
+   		<button>StartPage</button>
+	</a>
+	<p> </p>
+
+	<h1>Fill the form with correct information</h1>
+    <p> </p>
+    <form action="#" th:action="@{/register}" th:object="${user}" method="post">
+    	<p>
+    		Firstname: <input type="text" th:field="*{firstname}" />
+    		<span style="color:red" class="error" th:if="${#fields.hasErrors('firstname')}" th:errors="*{firstname}"></span>
+    	</p>
+    	<p>
+    		Lastname: <input type="text" th:field="*{lastname}" />
+    		<span style="color:red" class="error" th:if="${#fields.hasErrors('lastname')}" th:errors="*{lastname}"></span>
+    	</p>
+    	<p>
+    		Username: <input type="text" th:field="*{username}" />
+    		<span style="color:red" class="error" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span>
+    		<span style="color:red" th:if ="${usernameExistsErrorMessage != null}" th:text = "#{validation.user.username.alreadyExists }"></span>
+    	</p>
+    	<p>
+    		Password: <input type="text" th:field="*{password}" />
+    		<span style="color:red" class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+    	</p>
+    	<p><input type="submit" value="Register" /></p>
+    </form>
+    
+</html>
