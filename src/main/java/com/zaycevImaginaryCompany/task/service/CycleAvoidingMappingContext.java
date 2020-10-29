@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class CycleAvoidingMappingContext
 {
-    private Map<Object, Object> knownInstances = new IdentityHashMap<>();
+    private final Map<Object, Object> knownInstances = new IdentityHashMap<>();
 
     @BeforeMapping
     public <T> T getMappedInstance(Object source, @TargetType Class<T> targetType)
