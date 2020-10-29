@@ -5,17 +5,20 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import com.zaycevImaginaryCompany.task.domain.UserDTO;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mapstruct.factory.Mappers;
 
 import com.zaycevImaginaryCompany.task.domain.Account;
 import com.zaycevImaginaryCompany.task.domain.AccountDTO;
 import com.zaycevImaginaryCompany.task.domain.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.HashSet;
 
+@SpringBootTest
 public class AccountMapperTests
 {
-	private final AccountMapper accountMapper = Mappers.getMapper(AccountMapper.class);
+	@Autowired
+	private AccountMapper accountMapper;
 	
 	@Test
 	@DisplayName("Account should be correctly mapped to AccountDTO")
@@ -27,7 +30,7 @@ public class AccountMapperTests
 		
 		Account acc = new Account(owner, accountNumber, amount);
 		
-		AccountDTO accDTO = accountMapper.accountToDTO(acc);
+		AccountDTO accDTO = accountMapper.accountToDTO(acc, new CycleAvoidingMappingContext());
 		
 		assertEquals(accountNumber, accDTO.getAccountNumber());
 		assertEquals(amount, accDTO.getAmount());
@@ -42,7 +45,7 @@ public class AccountMapperTests
 		
 		AccountDTO accDTO = new AccountDTO(new UserDTO(), accountNumber, amount);
 		
-		Account acc = accountMapper.DTOtoAccount(accDTO);
+		Account acc = accountMapper.DTOtoAccount(accDTO, new CycleAvoidingMappingContext());
 		
 		assertEquals(accountNumber, acc.getAccountNumber());
 		assertEquals(amount, acc.getAmount());

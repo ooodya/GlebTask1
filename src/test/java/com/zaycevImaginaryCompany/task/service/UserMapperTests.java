@@ -13,25 +13,29 @@ import com.zaycevImaginaryCompany.task.domain.Account;
 import com.zaycevImaginaryCompany.task.domain.AccountDTO;
 import com.zaycevImaginaryCompany.task.domain.User;
 import com.zaycevImaginaryCompany.task.domain.UserDTO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
+@SpringBootTest
 public class UserMapperTests
 {
-	private final UserMapper userMapper = Mappers.getMapper(UserMapper.class);
+	@Autowired
+	private UserMapper userMapper;
 	
 	@Test
 	@DisplayName("User should be correctly mapped to UserDTO")
 	public void canBeMappedToDTO()
 	{
-		String lastname = "Patrik";
 		String firstname = "John";
+		String lastname = "Patrik";
 		String username = "JohnnyGuitar";
 		String password = "1";
 		
-		User user = new User(lastname, firstname, username, password, new HashSet<>());
+		User user = new User(firstname, lastname, username, password, new HashSet<>());
 		new Account(user, 1L, 0);
 		new Account(user, 2L, 0);
 		
-		UserDTO userDTO = userMapper.userToDTO(user);
+		UserDTO userDTO = userMapper.userToDTO(user, new CycleAvoidingMappingContext());
 		
 		assertEquals(lastname, userDTO.getLastname());
 		assertEquals(firstname, userDTO.getFirstname());
@@ -57,7 +61,7 @@ public class UserMapperTests
 		Set<AccountDTO> accDTOs = Set.of(accDTO1, accDTO2);
 		userDTO.setAccountDTOs(accDTOs);
 
-		User user = userMapper.DTOtoUser(userDTO);
+		User user = userMapper.DTOtoUser(userDTO, new CycleAvoidingMappingContext());
 		
 		assertEquals(lastname, user.getLastname());
 		assertEquals(firstname, user.getFirstname());
