@@ -15,9 +15,11 @@ import javax.validation.constraints.NotBlank;
 
 import lombok.AccessLevel;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Data
 @NoArgsConstructor
@@ -33,17 +35,21 @@ public class User implements Serializable
 	@Setter(AccessLevel.NONE)
 	@Id
 	@GeneratedValue
+	@EqualsAndHashCode.Exclude
+	@ToString.Exclude
 	private Long id;
 
+	@Column(name = "firstname")
 	private String firstname;
 
+	@Column(name = "lastname")
 	private String lastname;
 
-	@Column(unique = true, nullable = false)
+	@Column(name = "username", unique = true, nullable = false)
 	@NotBlank(message = "{validation.user.username.empty}")
 	private String username;
 
-	@Column(nullable = false)
+	@Column(name = "password", nullable = false)
 	@NotBlank(message = "{validation.user.password.empty}")
 	private String password;
 
@@ -51,21 +57,26 @@ public class User implements Serializable
 	@Getter(AccessLevel.NONE)
 	@OneToMany(mappedBy = "owner", fetch = FetchType.EAGER)
 	@org.hibernate.annotations.OnDelete(action = org.hibernate.annotations.OnDeleteAction.CASCADE)
+	@EqualsAndHashCode.Exclude
+	@ToString.Exclude
 	private Set<Account> accounts = new HashSet<>();
 
-	public User(String lastname, String firstname, String username, String password)
+	public User(String firstname, String lastname, String username, String password, Set<Account> accounts)
 	{
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.username = username;
 		this.password = password;
+		
+		accounts.forEach(a -> a.setOwner(this)); 		
+		this.accounts = accounts;
 	}
 
 	public void addAccount(Account account)
 	{
 		if (account.getOwner() == null)
 		{
-			account.addOwner(this);
+			account.setOwner(this);
 		}
 
 		accounts.add(account);
@@ -80,57 +91,11 @@ public class User implements Serializable
 	{
 		return Collections.unmodifiableSet(accounts);
 	}
-
-	@Override
-	public String toString()
+	
+	public void setAccounts(Set<Account> accounts)
 	{
-		return "User [id=" + id + ", firstname=" + firstname + ", lastname=" + lastname + ", username=" + username
-				+ "]";
+		accounts.forEach(a -> a.setOwner(this)); 
+		
+		this.accounts = accounts;
 	}
-
-	@Override
-	public boolean equals(Object obj)
-	{
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		User other = (User) obj;
-		if (firstname == null)
-		{
-			if (other.firstname != null)
-				return false;
-		}
-		else if (!firstname.equals(other.firstname))
-			return false;
-		if (lastname == null)
-		{
-			if (other.lastname != null)
-				return false;
-		}
-		else if (!lastname.equals(other.lastname))
-			return false;
-		if (username == null)
-		{
-			if (other.username != null)
-				return false;
-		}
-		else if (!username.equals(other.username))
-			return false;
-		return true;
-	}
-
-	@Override
-	public int hashCode()
-	{
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((firstname == null) ? 0 : firstname.hashCode());
-		result = prime * result + ((lastname == null) ? 0 : lastname.hashCode());
-		result = prime * result + ((username == null) ? 0 : username.hashCode());
-		return result;
-	}
-
 }

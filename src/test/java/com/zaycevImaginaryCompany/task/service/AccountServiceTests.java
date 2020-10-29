@@ -2,6 +2,7 @@ package com.zaycevImaginaryCompany.task.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.HashSet;
 import java.util.Optional;
 
 import org.junit.jupiter.api.AfterEach;
@@ -22,16 +23,16 @@ public class AccountServiceTests
 	@Autowired
 	private UserService uService;
 	
-	private User owner1 = new User("Patrik", "John", "JohnnyGuitar", "11");
+	private final User owner1 = new User("Patrik", "John", "JohnnyGuitar", "11", new HashSet<>());
 	
-	private int amount1 = 1000;
-	private long accountNumber1 = 12345;
+	private final int amount1 = 1000;
+	private final long accountNumber1 = 12345;
 	
-	private int amount2 = 5000;
-	private long accountNumber2 = 67890;
+	private final int amount2 = 5000;
+	private final long accountNumber2 = 67890;
 	
-	private Account acc1 = new Account(accountNumber1, owner1, amount1);
-	private Account acc2 = new Account(accountNumber2, owner1, amount2);
+	private final Account acc1 = new Account(owner1, accountNumber1, amount1);
+	private final Account acc2 = new Account(owner1, accountNumber2, amount2);
 	
 	@BeforeEach
 	void init()

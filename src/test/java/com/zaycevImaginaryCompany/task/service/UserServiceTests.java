@@ -38,9 +38,9 @@ public class UserServiceTests
 	private String lastname3 = "Zaytsev";
 	private String password3 = "3";
 	
-	private User user1 = new User(lastname1, firstname1, username1, password1);
-	private User user2 = new User(lastname2, firstname2, username2, password2);
-	private User user3 = new User(lastname3, firstname3, username3, password3);
+	private User user1 = new User(lastname1, firstname1, username1, password1, new HashSet<>());
+	private User user2 = new User(lastname2, firstname2, username2, password2, new HashSet<>());
+	private User user3 = new User(lastname3, firstname3, username3, password3, new HashSet<>());
 	
 	private int amount1 = 1000;
 	private long accountNumber1 = 0505;
@@ -48,8 +48,8 @@ public class UserServiceTests
 	private int amount2 = 5000;
 	private long accountNumber2 = 6060;
 	
-	private Account acc1 = new Account(accountNumber1, user3, amount1);
-	private Account acc2 = new Account(accountNumber2, user3, amount2);
+	private Account acc1 = new Account(user3, accountNumber1, amount1);
+	private Account acc2 = new Account(user3, accountNumber2, amount2);
 	
 	@Autowired
 	private UserService uService;

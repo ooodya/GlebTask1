@@ -55,7 +55,7 @@ public class UserAccsController
 			if (dbUser.getAccounts().size() < 5)
 			{
 				long accNum = generateAccountNumber();
-				accountService.save(new Account(accNum, dbUser));
+				accountService.save(new Account(dbUser, accNum, 0));
 			}
 			else
 			{

@@ -1,12 +1,15 @@
 package com.zaycevImaginaryCompany.task.domain;
 
-import static org.junit.Assert.assertEquals;
-
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.Assert.*;
 
 public class UserTests
 {
-	public void testUserSettersAndGettersAreWorking()
+	@Test
+	@DisplayName("Setters and getters are working")
+	public void settersAndGettersAreWorking()
 	{
 		User user = new User();
 		String firstname = "John";
@@ -25,16 +28,29 @@ public class UserTests
 	}
 	
 	@Test
-	public void testUserCanAddSeveralAccounts()
+	@DisplayName("User can have several accounts")
+	public void canAddSeveralAccounts()
 	{
 		User user = new User();
-		Account acc = new Account(1L, user);
-		Account acc1 = new Account(2L, user);
+		Account acc1 = new Account(user, 1L, 0);
+		Account acc2 = new Account(user, 2L, 0);
+
+		user.addAccount(acc1);
+		user.addAccount(acc2);
+
+		assertEquals(2, user.getAccounts().size());
+	}
+	
+	@Test
+	@DisplayName("Adding account without owner also sets owner to account")
+	public void canAddOwnerToAccountWhenAddingAccount()
+	{
+		Account acc = new Account();		
+		User user = new User();
 		
 		user.addAccount(acc);
-		user.addAccount(acc1);
 		
-		assertEquals(2, user.getAccounts().size());
+		assertNotNull(acc.getOwner());
 	}
 		
 }

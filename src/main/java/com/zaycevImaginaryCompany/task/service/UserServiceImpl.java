@@ -1,6 +1,7 @@
 package com.zaycevImaginaryCompany.task.service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
@@ -77,7 +78,7 @@ public class UserServiceImpl implements UserService
 			return false;
 		}
 
-		User userForSaving = new User(user.getLastname(), user.getFirstname(), user.getUsername(), user.getPassword());
+		User userForSaving = new User(user.getLastname(), user.getFirstname(), user.getUsername(), user.getPassword(), new HashSet<>());
 		userForSaving.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 		userRepository.save(userForSaving);
 
@@ -86,7 +87,7 @@ public class UserServiceImpl implements UserService
 			Optional<Account> persistedAcc = accountRepository.findByAccountNumber(acc.getAccountNumber());
 			if (!persistedAcc.isPresent())
 			{
-				acc.addOwner(userForSaving);
+				acc.setOwner(userForSaving);
 				accountRepository.save(acc);
 			}
 		}
