@@ -7,11 +7,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class AccountDTO
+public class AccountDTOLight
 {
-	private UserDTOLight userDTOLight;
+    private long accountNumber;
 
-	private long accountNumber;
-	
-	private int amount;
+    private int amount;
 }

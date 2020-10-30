@@ -39,9 +39,9 @@ public class UserAccsController
 	@PostMapping("/chooseAccount")
 	public String chooseAccount(@RequestParam String chosenAccount, Model model)
 	{
-		long accNumber = Long.parseLong(chosenAccount);
+		/*long accNumber = Long.parseLong(chosenAccount);
 		Account account = accountService.findByAccountNumber(accNumber).orElseGet(Account::new);
-		model.addAttribute("account", account);
+		model.addAttribute("account", account);*/
 		return "account";
 	}
 	
@@ -52,7 +52,7 @@ public class UserAccsController
 		User dbUser = userService.findByUsername(username).orElse(null);
 		if (dbUser != null)
 		{
-			if (dbUser.getAccounts().size() < 5)
+			/*if (dbUser.getAccounts().size() < 5)
 			{
 				long accNum = generateAccountNumber();
 				accountService.save(new Account(dbUser, accNum, 0));
@@ -61,7 +61,7 @@ public class UserAccsController
 			{
 				model.addAttribute("tooMuchAccounts", "You already have enough accounts");
 			}
-			model.addAttribute("user", dbUser);
+			model.addAttribute("user", dbUser);*/
 		}
 		return "userAccounts";
 	}

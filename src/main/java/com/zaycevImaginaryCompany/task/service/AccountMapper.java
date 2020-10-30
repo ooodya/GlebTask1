@@ -1,18 +1,28 @@
 package com.zaycevImaginaryCompany.task.service;
 
-import org.mapstruct.Context;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
+import org.mapstruct.*;
 
 import com.zaycevImaginaryCompany.task.domain.Account;
 import com.zaycevImaginaryCompany.task.domain.AccountDTO;
 
-@Mapper(componentModel = "spring", uses = UserMapper.class)
+import java.util.List;
+
+@Mapper(componentModel = "spring", uses = UserLightMapper.class)
 public interface AccountMapper
 {
-	@Mapping(source = "owner", target = "userDTO")
-	AccountDTO accountToDTO(Account acc, @Context CycleAvoidingMappingContext context);
-	
-	@Mapping(source = "userDTO", target = "owner")
-	Account DTOtoAccount(AccountDTO accDTO, @Context CycleAvoidingMappingContext context);
+	@Mapping(source = "owner", target = "userDTOLight")
+	AccountDTO accountToDTO(Account acc);
+
+	@Mapping(source = "userDTOLight", target = "owner")
+	Account DTOtoAccount(AccountDTO accDTO);
+
+	@Mapping(source = "owner", target = "userDTOLight")
+	List<AccountDTO> accountsToDTOs(List<Account> accounts);
+
+	@Mapping(source = "userDTOLight", target = "owner")
+	List<Account> DTOsToAccounts(List<AccountDTO> accounts);
+
+	@BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+	@Mapping(source = "userDTOLight", target = "owner")
+	void updateAccountFromDTO(AccountDTO accDTO, @MappingTarget Account acc);
 }

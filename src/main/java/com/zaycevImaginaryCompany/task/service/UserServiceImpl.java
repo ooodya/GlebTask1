@@ -39,22 +39,6 @@ public class UserServiceImpl implements UserService
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<User> findByLastname(String lastname)
-	{
-		List<User> users = userRepository.findByLastname(lastname);
-		return users;
-	}
-
-	@Override
-	@Transactional(readOnly = true)
-	public List<User> findByLastnameAndFirstname(String lastname, String firstname)
-	{
-		List<User> users = userRepository.findByLastnameAndFirstname(lastname, firstname);
-		return users;
-	}
-
-	@Override
-	@Transactional(readOnly = true)
 	public Optional<User> findByUsername(String username)
 	{
 		Optional<User> user = userRepository.findByUsername(username);

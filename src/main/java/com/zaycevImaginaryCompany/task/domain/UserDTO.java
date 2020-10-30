@@ -20,5 +20,5 @@ public class UserDTO
 	
 	private String password;
 	
-	private Set<AccountDTO> accountDTOs = new HashSet<>();
+	private Set<AccountDTOLight> accountDTOLights = new HashSet<>();
 }

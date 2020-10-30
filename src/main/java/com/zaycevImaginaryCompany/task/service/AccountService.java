@@ -4,16 +4,19 @@ import java.util.List;
 import java.util.Optional;
 
 import com.zaycevImaginaryCompany.task.domain.Account;
+import com.zaycevImaginaryCompany.task.domain.AccountDTO;
 
 public interface AccountService
 {
-	Optional<Account> findByAccountNumber(long accountNumber);
+	Optional<AccountDTO> findByAccountNumber(long accountNumber);
 	
-	List<Account> findAll();
+	List<AccountDTO> findAll();
 
-	Optional<Account> findById(Long id);
+	Optional<AccountDTO> findById(Long id);
 
-	boolean save(Account account);
+	void create(AccountDTO accountDTO);
 
-	void delete(Account account);
+	void update(AccountDTO accountDTO);
+
+	void delete(AccountDTO accountDTO);
 }

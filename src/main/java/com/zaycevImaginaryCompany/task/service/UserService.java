@@ -9,10 +9,6 @@ public interface UserService
 {
 	List<User> findAll();
 
-	List<User> findByLastname(String lastname);
-	
-	List<User> findByLastnameAndFirstname(String lastname, String firstname);
-	
 	Optional<User> findByUsername(String username);
 
 	Optional<User> findById(Long id);

@@ -7,11 +7,13 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class AccountDTO
+public class UserDTOLight
 {
-	private UserDTOLight userDTOLight;
+    private String firstname;
 
-	private long accountNumber;
-	
-	private int amount;
+    private String lastname;
+
+    private String username;
+
+    private String password;
 }

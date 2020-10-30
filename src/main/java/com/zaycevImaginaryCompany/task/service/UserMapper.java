@@ -7,12 +7,20 @@ import org.mapstruct.Mapping;
 import com.zaycevImaginaryCompany.task.domain.User;
 import com.zaycevImaginaryCompany.task.domain.UserDTO;
 
-@Mapper(componentModel = "spring", uses = AccountMapper.class)
+import java.util.List;
+
+@Mapper(componentModel = "spring", uses = AccountLightMapper.class)
 public interface UserMapper
 {
-	@Mapping(source = "accounts", target = "accountDTOs")
-	UserDTO userToDTO(User user, @Context CycleAvoidingMappingContext context);
+	@Mapping(source = "accounts", target = "accountDTOLights")
+	UserDTO userToDTO(User user);
 	
-	@Mapping(source = "accountDTOs", target = "accounts")
-	User DTOtoUser(UserDTO userDTO, @Context CycleAvoidingMappingContext context);
+	@Mapping(source = "accountDTOLights", target = "accounts")
+	User DTOtoUser(UserDTO userDTO);
+
+	@Mapping(source = "accounts", target = "accountDTOLights")
+	List<UserDTO> usersToDTOs(List<User> user);
+
+	@Mapping(source = "accountDTOLights", target = "accounts")
+	List<User> DTOsToUsers(List<UserDTO> user);
 }

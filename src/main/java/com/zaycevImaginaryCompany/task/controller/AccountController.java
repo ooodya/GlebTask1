@@ -6,7 +6,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.zaycevImaginaryCompany.task.domain.Account;
 import com.zaycevImaginaryCompany.task.service.AccountService;
 import com.zaycevImaginaryCompany.task.service.AccountTransferService;
 
@@ -37,11 +36,11 @@ public class AccountController
 			}
 		}
 			
-		Account account = accountService.findByAccountNumber(accNumber).orElse(null);
+		/*Account account = accountService.findByAccountNumber(accNumber).orElse(null);
 		account.setAmount(account.getAmount() + iAmount);
 		accountService.save(account);
 		
-		model.addAttribute("account", account);
+		model.addAttribute("account", account);*/
 		
 		return "account";
 	}
@@ -54,8 +53,8 @@ public class AccountController
 		{
 			accNumber = Long.parseLong(accountNumber);
 		}
-		Account account = accountService.findByAccountNumber(accNumber).orElse(null);
-		model.addAttribute("account", account);
+		/*Account account = accountService.findByAccountNumber(accNumber).orElse(null);
+		model.addAttribute("account", account);*/
 		
 		long destAccNum = 0; 
 		if (!destinationAccountNumber.isEmpty())
@@ -79,7 +78,7 @@ public class AccountController
 			return "account";
 		}
 		
-		if (transferService.transfer(destAccNum, accNumber, amountToTransfer))
+		/*if (transferService.transfer(destAccNum, accNumber, amountToTransfer))
 		{
 			model.addAttribute("transferSuccess", "");
 			account = accountService.findByAccountNumber(accNumber).orElse(null);
@@ -88,7 +87,7 @@ public class AccountController
 		else
 		{
 			model.addAttribute("transferFail", "");
-		}
+		}*/
 		
 		return "account";
 	}

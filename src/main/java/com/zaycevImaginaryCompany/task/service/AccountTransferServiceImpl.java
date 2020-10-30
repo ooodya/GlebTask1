@@ -1,10 +1,11 @@
 package com.zaycevImaginaryCompany.task.service;
 
+import com.zaycevImaginaryCompany.task.domain.AccountDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.zaycevImaginaryCompany.task.domain.Account;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -20,22 +21,27 @@ public class AccountTransferServiceImpl implements AccountTransferService
 		{
 			return false;
 		}
-		
-		Account sourceAccount = accountService.findByAccountNumber(sourceAccNumber).orElse(null);
-		Account destinationAccount = accountService.findByAccountNumber(destinationAccNumber).orElse(null);
-		
-		if (sourceAccount != null && destinationAccount != null)
+
+		final Optional<AccountDTO> sourceAccountDTO = accountService.findByAccountNumber(sourceAccNumber);
+		final Optional<AccountDTO> destinationAccountDTO = accountService.findByAccountNumber(destinationAccNumber);
+
+		if (sourceAccountDTO.isEmpty() || destinationAccountDTO.isEmpty())
 		{
-			if (sourceAccount.getAmount() < amount)
-			{
-				return false;
-			}
-			sourceAccount.setAmount(sourceAccount.getAmount() - amount);
-			destinationAccount.setAmount(destinationAccount.getAmount() + amount);
-			return true;
+			return false;
 		}
-		
-		return false;
+
+		AccountDTO source = sourceAccountDTO.get();
+		AccountDTO destination = destinationAccountDTO.get();
+
+		if (source.getAmount() < amount)
+		{
+			return false;
+		}
+
+		source.setAmount(source.getAmount() - amount);
+		destination.setAmount(destination.getAmount() + amount);
+
+		return true;
 	}
 
 }
