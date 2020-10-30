@@ -9,7 +9,6 @@ import com.zaycevImaginaryCompany.task.domain.UserDTO;
 import com.zaycevImaginaryCompany.task.exceptions.UserAlreadyExistsExseption;
 import com.zaycevImaginaryCompany.task.exceptions.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,9 +26,6 @@ public class UserServiceImpl implements UserService
 
 	@Autowired
 	private AccountRepository accountRepository;
-
-	@Autowired
-	BCryptPasswordEncoder bCryptPasswordEncoder;
 
 	@Autowired
 	UserMapper userMapper;

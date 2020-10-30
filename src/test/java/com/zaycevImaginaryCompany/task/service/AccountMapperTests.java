@@ -129,14 +129,12 @@ public class AccountMapperTests
 		User user = new User("Vadim", "Zaytsev", "chevek", "1", new HashSet<>());
 		Account account = new Account(user, 1L, 100);
 
-		UserDTOLight userDTOLight = new UserDTOLight("Vadim", "Zaytsev", "chevek", "2");
+		UserDTOLight userDTOLight = new UserDTOLight("Vadim", "Zaytsev", "chevek", "1");
 		AccountDTO accountDTO = new AccountDTO(userDTOLight, 1L, 200);
 
 		accountMapper.updateAccountFromDTO(accountDTO, account);
 
 		assertEquals(1L, account.getAccountNumber());
 		assertEquals(200, account.getAmount());
-		assertEquals("Vadim", account.getOwner().getFirstname());
-		assertEquals("2", account.getOwner().getPassword());
 	}
 }

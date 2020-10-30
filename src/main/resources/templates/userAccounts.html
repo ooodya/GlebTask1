@@ -8,7 +8,7 @@
 	<p> </p>
 
 	<h1
-		th:text="${'Hello ' + user.getFirstname() + ' ' + user.getLastname()}"></h1>
+		th:text="${'Hello ' + userDTO.getFirstname() + ' ' + userDTO.getLastname()}"></h1>
 	<p></p>
 
 	<table>
@@ -19,7 +19,7 @@
 	        </tr>
     	</thead>
 		<tbody>
-	        <tr th:each="account : ${user.getAccounts()}">
+	        <tr th:each="account : ${userDTO.getAccountDTOLights()}">
 	            <td width="200"><span th:text="${account.getAccountNumber()}"></span></td>
 	            <td width="200"><span th:text="${account.getAmount()}"></span></td>
 	            <td>
@@ -33,7 +33,7 @@
     </table>
 	
 	<p></p>
-	<form action="#" class="button" th:action="@{/addAccount}" th:object="${user}" method="POST">
+	<form action="#" class="button" th:action="@{/addAccount}" th:object="${userDTO}" method="POST">
 		<input type="submit" value="Add account" />
 	</form>
 	<p>

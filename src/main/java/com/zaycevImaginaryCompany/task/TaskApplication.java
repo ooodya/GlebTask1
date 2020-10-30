@@ -5,11 +5,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
 @SpringBootApplication
-public class GlebTask1Application
+public class TaskApplication
 {
 	public static void main(String[] args)
 	{
-		SpringApplication.run(GlebTask1Application.class, args);
+		SpringApplication.run(TaskApplication.class, args);
 	}
-
 }

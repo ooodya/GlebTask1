@@ -9,7 +9,7 @@
 
 	<h1>Fill the form with correct information</h1>
     <p> </p>
-    <form action="#" th:action="@{/register}" th:object="${user}" method="post">
+    <form action="#" th:action="@{/register}" th:object="${userDTO}" method="post">
     	<p>
     		Firstname: <input type="text" th:field="*{firstname}" />
     		<span style="color:red" class="error" th:if="${#fields.hasErrors('firstname')}" th:errors="*{firstname}"></span>

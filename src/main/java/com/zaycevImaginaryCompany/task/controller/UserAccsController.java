@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.zaycevImaginaryCompany.task.domain.Account;
 import com.zaycevImaginaryCompany.task.domain.User;
-import com.zaycevImaginaryCompany.task.security.SecurityService;
 import com.zaycevImaginaryCompany.task.service.AccountService;
 import com.zaycevImaginaryCompany.task.service.UserService;
 
@@ -24,13 +23,11 @@ public class UserAccsController
 	@Autowired
 	private UserService userService;
 	
-	@Autowired
-	private SecurityService securityService;
-	
+
 	@GetMapping("/userAccounts")
 	public String getUserAccounts(Model model)
 	{
-		String username = securityService.getLoggedInUsername();
+		//String username = securityService.getLoggedInUsername();
 		/*User dbUser = userService.findByUsername(username).orElse(null);
 		model.addAttribute("user", dbUser);*/
 		return "userAccounts";
@@ -48,7 +45,7 @@ public class UserAccsController
 	@PostMapping("/addAccount")
 	public String addAccountToUser(Model model)
 	{
-		String username = securityService.getLoggedInUsername();
+		//String username = securityService.getLoggedInUsername();
 		/*User dbUser = userService.findByUsername(username).orElse(null);
 		if (dbUser != null)
 		{

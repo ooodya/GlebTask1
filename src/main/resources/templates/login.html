@@ -13,7 +13,7 @@
     <span style="color:red" class="error" th:if="${param.error}">Invalid username or password</span>
     <p></p>
     
-    <form action="#" th:action="@{/login}" th:object="${user}" method="post">
+    <form action="#" th:action="@{/login}" th:object="${userDTO}" method="post">
     	<p>
     		Username: <input type="text" th:field="*{username}"/>
     	</p>
