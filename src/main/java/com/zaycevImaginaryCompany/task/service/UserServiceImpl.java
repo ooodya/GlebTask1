@@ -5,6 +5,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
+import com.zaycevImaginaryCompany.task.domain.UserDTO;
+import com.zaycevImaginaryCompany.task.exceptions.UserAlreadyExistsExseption;
+import com.zaycevImaginaryCompany.task.exceptions.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -28,60 +31,59 @@ public class UserServiceImpl implements UserService
 	@Autowired
 	BCryptPasswordEncoder bCryptPasswordEncoder;
 
+	@Autowired
+	UserMapper userMapper;
+
 	@Override
 	@Transactional(readOnly = true)
-	public List<User> findAll()
+	public List<UserDTO> findAll()
 	{
 		List<User> users = new ArrayList<>();
 		userRepository.findAll().forEach(users::add);
-		return users;
+		return userMapper.usersToDTOs(users);
 	}
 
 	@Override
 	@Transactional(readOnly = true)
-	public Optional<User> findByUsername(String username)
+	public Optional<UserDTO> findByUsername(String username)
 	{
-		Optional<User> user = userRepository.findByUsername(username);
-		return user;
+		final Optional<User> user = userRepository.findByUsername(username);
+		return user.map(userMapper::userToDTO);
 	}
 
 	@Override
-	@Transactional(readOnly = true)
-	public Optional<User> findById(Long id)
+	public void create(UserDTO userDTO)
 	{
-		Optional<User> user = userRepository.findById(id);
-		return user;
-	}
-
-	@Override
-	public boolean save(User user)
-	{
-		User userFromDB = userRepository.findByUsername(user.getUsername()).orElse(null);
-		if (userFromDB != null)
+		final Optional<User> dbUser = userRepository.findByUsername(userDTO.getUsername());
+		if (dbUser.isPresent())
 		{
-			return false;
+			throw new UserAlreadyExistsExseption(userDTO.getUsername());
 		}
 
-		User userForSaving = new User(user.getLastname(), user.getFirstname(), user.getUsername(), user.getPassword(), new HashSet<>());
-		userForSaving.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-		userRepository.save(userForSaving);
+		final User user = userMapper.DTOtoUser(userDTO);
 
-		for (Account acc : user.getAccounts())
-		{
-			Optional<Account> persistedAcc = accountRepository.findByAccountNumber(acc.getAccountNumber());
-			if (!persistedAcc.isPresent())
-			{
-				acc.setOwner(userForSaving);
-				accountRepository.save(acc);
-			}
-		}
-		
-		return true;
+		userRepository.save(user);
+
 	}
 
 	@Override
-	public void delete(User user)
+	public void update(UserDTO userDTO)
 	{
-		userRepository.delete(user);
+		final Optional<User> user = userRepository.findByUsername(userDTO.getUsername());
+		if (user.isEmpty())
+		{
+			throw new UserNotFoundException(userDTO.getUsername());
+		}
+
+		userMapper.updateUserFromDTO(userDTO, user.get());
+
+		userRepository.save(user.get());
+	}
+
+	@Override
+	public void delete(UserDTO userDTO)
+	{
+		final Optional<User> user = userRepository.findByUsername(userDTO.getUsername());
+		user.ifPresent(userRepository::delete);
 	}
 }

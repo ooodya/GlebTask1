@@ -122,4 +122,19 @@ public class UserMapperTests
 		assertEquals("12345", userDTOList.get(1).getPassword());
 		assertEquals(1, userDTOList.get(1).getAccountDTOLights().size());
 	}
+
+	@Test
+	@DisplayName("User can be updated from DTO")
+	public void canBeUpdated()
+	{
+		User user = new User("firstname1", "lastname2", "username1", "password1", new HashSet<>());
+		UserDTO userDTO = new UserDTO("newFirstname", "lastname2", "username1", "newPassword", new HashSet<>());
+
+		userMapper.updateUserFromDTO(userDTO, user);
+
+		assertEquals("newFirstname", user.getFirstname());
+		assertEquals("lastname2", user.getLastname());
+		assertEquals("username1", user.getUsername());
+		assertEquals("newPassword", user.getPassword());
+	}
 }

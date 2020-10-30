@@ -18,10 +18,11 @@ public class Account
 	@GeneratedValue
 	@EqualsAndHashCode.Exclude
 	@ToString.Exclude
+	@Setter(AccessLevel.NONE)
 	private Long id;
 	
 	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-	@JoinColumn(name = "USER_ID", nullable = false)
+	@JoinColumn(name = "USER_ID")
 	@Setter(AccessLevel.NONE)
 	@EqualsAndHashCode.Exclude
 	@ToString.Exclude
@@ -38,6 +39,15 @@ public class Account
 		this.owner = owner;
 		
 		owner.addAccount(this);
+	}
+
+	public void deleteOwner()
+	{
+		if (owner != null)
+		{
+			owner.deleteAccount(this);
+		}
+		this.owner = null;
 	}
 
 	public Account(User owner, long accountNumber, int amount)

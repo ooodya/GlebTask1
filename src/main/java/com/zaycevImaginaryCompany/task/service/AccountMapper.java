@@ -23,6 +23,5 @@ public interface AccountMapper
 	List<Account> DTOsToAccounts(List<AccountDTO> accounts);
 
 	@BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-	@Mapping(source = "userDTOLight", target = "owner")
 	void updateAccountFromDTO(AccountDTO accDTO, @MappingTarget Account acc);
 }

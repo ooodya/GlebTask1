@@ -1,8 +1,6 @@
 package com.zaycevImaginaryCompany.task.service;
 
-import org.mapstruct.Context;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
+import org.mapstruct.*;
 
 import com.zaycevImaginaryCompany.task.domain.User;
 import com.zaycevImaginaryCompany.task.domain.UserDTO;
@@ -23,4 +21,7 @@ public interface UserMapper
 
 	@Mapping(source = "accountDTOLights", target = "accounts")
 	List<User> DTOsToUsers(List<UserDTO> user);
+
+	@BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+	void updateUserFromDTO(UserDTO userDTO, @MappingTarget User user);
 }

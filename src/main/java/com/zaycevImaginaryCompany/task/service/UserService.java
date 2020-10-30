@@ -4,17 +4,18 @@ import java.util.List;
 import java.util.Optional;
 
 import com.zaycevImaginaryCompany.task.domain.User;
+import com.zaycevImaginaryCompany.task.domain.UserDTO;
 
 public interface UserService
 {
-	List<User> findAll();
+	List<UserDTO> findAll();
 
-	Optional<User> findByUsername(String username);
+	Optional<UserDTO> findByUsername(String username);
 
-	Optional<User> findById(Long id);
+	void create(UserDTO userDTO);
 
-	boolean save(User user);
+	void update(UserDTO userDTO);
 
-	void delete(User user);
+	void delete(UserDTO userDTO);
 
 }

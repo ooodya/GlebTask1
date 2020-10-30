@@ -12,8 +12,6 @@ public interface AccountService
 	
 	List<AccountDTO> findAll();
 
-	Optional<AccountDTO> findById(Long id);
-
 	void create(AccountDTO accountDTO);
 
 	void update(AccountDTO accountDTO);

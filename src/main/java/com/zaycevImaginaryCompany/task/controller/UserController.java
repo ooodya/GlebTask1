@@ -48,11 +48,11 @@ public class UserController
 		{
 			return "register";
 		}
-		if (!uService.save(user))
+		/*if (!uService.save(user))
 		{
 			model.addAttribute("usernameExistsErrorMessage", "");
 			return "register";
-		}
+		}*/
 		
 		securityService.autoLogin(user.getUsername(), user.getPassword());
 		model.addAttribute("user", user);

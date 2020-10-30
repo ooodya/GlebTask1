@@ -31,8 +31,8 @@ public class UserAccsController
 	public String getUserAccounts(Model model)
 	{
 		String username = securityService.getLoggedInUsername();
-		User dbUser = userService.findByUsername(username).orElse(null);
-		model.addAttribute("user", dbUser);
+		/*User dbUser = userService.findByUsername(username).orElse(null);
+		model.addAttribute("user", dbUser);*/
 		return "userAccounts";
 	}
 	
@@ -49,10 +49,10 @@ public class UserAccsController
 	public String addAccountToUser(Model model)
 	{
 		String username = securityService.getLoggedInUsername();
-		User dbUser = userService.findByUsername(username).orElse(null);
+		/*User dbUser = userService.findByUsername(username).orElse(null);
 		if (dbUser != null)
 		{
-			/*if (dbUser.getAccounts().size() < 5)
+			if (dbUser.getAccounts().size() < 5)
 			{
 				long accNum = generateAccountNumber();
 				accountService.save(new Account(dbUser, accNum, 0));
@@ -61,8 +61,8 @@ public class UserAccsController
 			{
 				model.addAttribute("tooMuchAccounts", "You already have enough accounts");
 			}
-			model.addAttribute("user", dbUser);*/
-		}
+			model.addAttribute("user", dbUser);
+		}*/
 		return "userAccounts";
 	}
 	

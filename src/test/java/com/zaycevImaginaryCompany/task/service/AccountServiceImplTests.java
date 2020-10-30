@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.zaycevImaginaryCompany.task.domain.*;
+import com.zaycevImaginaryCompany.task.exceptions.AccountNotFoundException;
 import com.zaycevImaginaryCompany.task.repository.AccountRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,10 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
+@Transactional
 public class AccountServiceImplTests
 {
     @Autowired
@@ -25,8 +26,8 @@ public class AccountServiceImplTests
     private AccountRepository accountRepository;
 
     @Test
-    @DisplayName("All users can be found")
-    public void findAllShouldReturnAllUsers()
+    @DisplayName("All accounts can be found")
+    public void findAllShouldReturnAllAccounts()
     {
         UserDTOLight userDTOLight = new UserDTOLight("firstname1", "lastname1", "username1", "password1");
         AccountDTO accountDTO1 = new AccountDTO(userDTOLight, 1L, 100);
@@ -75,34 +76,6 @@ public class AccountServiceImplTests
     }
 
     @Test
-    @DisplayName("Account can be found by id if exists")
-    public void findByIdShouldReturnIfExists()
-    {
-        User owner = new User("firstname4", "lastname4", "username4", "password4", new HashSet<>());
-        Account account = new Account(owner, 5L, 100);
-        account.setId(100L);
-
-        accountRepository.save(account);
-
-        final Optional<AccountDTO> foundAccountDTO = accountService.findById(100L);
-
-        assertTrue(foundAccountDTO.isPresent());
-        assertEquals(100, foundAccountDTO.get().getAmount());
-        assertEquals(5L, foundAccountDTO.get().getAccountNumber());
-
-        accountRepository.delete(account);
-    }
-
-    @Test
-    @DisplayName("Empty optional returns if no account with such id")
-    public void findByAccounIdReturnEmptyOptionalIfNotExists()
-    {
-        final Optional<AccountDTO> foundAccountDTO = accountService.findById(50L);
-
-        assertTrue(foundAccountDTO.isEmpty());
-    }
-
-    @Test
     @DisplayName("Account can be saved")
     public void canBeSaved()
     {
@@ -138,6 +111,15 @@ public class AccountServiceImplTests
         assertEquals(200, foundAccountDTO.get().getAmount());
 
         accountService.delete(accountDTO);
+    }
+
+    @Test
+    @DisplayName("if account for updating not found throw AccountNotFoundException")
+    public void trowsAccountNotFoundExceptionIfNoAccountFOrUpdating()
+    {
+        AccountDTO accountDTO = new AccountDTO(new UserDTOLight(), 4783123123554L, 100);
+
+        assertThrows(AccountNotFoundException.class, () -> accountService.update(accountDTO));
     }
 
     @Test

@@ -30,16 +30,19 @@ public class AccountTransferServiceImpl implements AccountTransferService
 			return false;
 		}
 
-		AccountDTO source = sourceAccountDTO.get();
-		AccountDTO destination = destinationAccountDTO.get();
+		AccountDTO sourceDTO = sourceAccountDTO.get();
+		AccountDTO destinationDTO = destinationAccountDTO.get();
 
-		if (source.getAmount() < amount)
+		if (sourceDTO.getAmount() < amount)
 		{
 			return false;
 		}
 
-		source.setAmount(source.getAmount() - amount);
-		destination.setAmount(destination.getAmount() + amount);
+		sourceDTO.setAmount(sourceDTO.getAmount() - amount);
+		destinationDTO.setAmount(destinationDTO.getAmount() + amount);
+
+		accountService.update(sourceDTO);
+		accountService.update(destinationDTO);
 
 		return true;
 	}

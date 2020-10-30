@@ -36,8 +36,6 @@ public class SecurityServiceImpl implements SecurityService
 		UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
 				userDetails, password, userDetails.getAuthorities());
 		
-		System.out.println(userDetails.getPassword());
-
 		authenticationManager.authenticate(usernamePasswordAuthenticationToken);
 
 		if (usernamePasswordAuthenticationToken.isAuthenticated())

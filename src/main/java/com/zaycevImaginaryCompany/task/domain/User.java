@@ -27,11 +27,11 @@ public class User implements Serializable
 	 */
 	private static final long serialVersionUID = -122259508010801586L;
 
-	@Setter(AccessLevel.NONE)
 	@Id
 	@GeneratedValue
 	@EqualsAndHashCode.Exclude
 	@ToString.Exclude
+	@Setter(AccessLevel.NONE)
 	private Long id;
 
 	@Column(name = "firstname")

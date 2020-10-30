@@ -47,14 +47,6 @@ public class AccountServiceImpl implements AccountService
 	}
 
 	@Override
-	@Transactional(readOnly = true)
-	public Optional<AccountDTO> findById(Long id)
-	{
-		Optional<Account> foundAcc = accountRepository.findById(id);
-		return foundAcc.map(accountMapper::accountToDTO);
-	}
-
-	@Override
 	public void create(AccountDTO accountDTO)
 	{
 		Account account = accountMapper.DTOtoAccount(accountDTO);
@@ -84,7 +76,7 @@ public class AccountServiceImpl implements AccountService
 		{
 			final Account account = accountOptional.get();
 
-			account.getOwner().deleteAccount(account);
+			account.deleteOwner();
 			accountRepository.delete(account);
 		}
 	}
