@@ -1,6 +1,5 @@
 package com.zaycevImaginaryCompany.task.service;
 
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -10,8 +9,6 @@ import com.zaycevImaginaryCompany.task.domain.*;
 import com.zaycevImaginaryCompany.task.exceptions.UserAlreadyExistsExseption;
 import com.zaycevImaginaryCompany.task.exceptions.UserNotFoundException;
 import com.zaycevImaginaryCompany.task.repository.UserRepository;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,16 +23,16 @@ import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
 @Transactional
-public class UserServiceImplTests
+public class UserCRUDServiceImplTests
 {
     @Autowired
-    private UserService userService;
+    private UserCRUDService userCRUDService;
 
     @Autowired
     private UserRepository userRepository;
 
     @Autowired
-    private AccountService accountService;
+    private AccountCRUDService accountCRUDService;
 
     @Test
     @DisplayName("All users can be found")
@@ -43,10 +40,10 @@ public class UserServiceImplTests
     {
         UserDTO userDTO1 = new UserDTO("firstname1", "lastname1", "username1", "password1", new HashSet<>());
         UserDTO userDTO2 = new UserDTO("firstname2", "lastname2", "username2", "password2", new HashSet<>());
-        userService.create(userDTO1);
-        userService.create(userDTO2);
+        userCRUDService.create(userDTO1);
+        userCRUDService.create(userDTO2);
 
-        final List<UserDTO> allUsers = userService.findAll();
+        final List<UserDTO> allUsers = userCRUDService.findAll();
 
         assertEquals(2, allUsers.size());
 
@@ -60,8 +57,8 @@ public class UserServiceImplTests
         assertEquals("username2", allUsers.get(1).getUsername());
         assertEquals("password2", allUsers.get(1).getPassword());
 
-        userService.delete(userDTO1);
-        userService.delete(userDTO2);
+        userCRUDService.delete(userDTO1);
+        userCRUDService.delete(userDTO2);
     }
 
     @Test
@@ -69,8 +66,8 @@ public class UserServiceImplTests
     public void findByUsernameShouldReturnIfExists()
     {
         UserDTO userDTO1 = new UserDTO("firstname1", "lastname1", "username1", "password1", new HashSet<>());
-        userService.create(userDTO1);
-        final Optional<UserDTO> userDTOOptional = userService.findByUsername("username1");
+        userCRUDService.create(userDTO1);
+        final Optional<UserDTO> userDTOOptional = userCRUDService.findByUsername("username1");
 
         assertTrue(userDTOOptional.isPresent());
 
@@ -81,14 +78,14 @@ public class UserServiceImplTests
         assertEquals("username1", userDTO.getUsername());
         assertEquals("password1", userDTO.getPassword());
 
-        userService.delete(userDTO1);
+        userCRUDService.delete(userDTO1);
     }
 
     @Test
     @DisplayName("empty optional is returned if no user with such username exists")
     public void findByUsernameShouldReturnEmptyOptionalIfNotExists()
     {
-        final Optional<UserDTO> userDTOOptional = userService.findByUsername("username1");
+        final Optional<UserDTO> userDTOOptional = userCRUDService.findByUsername("username1");
 
         assertTrue(userDTOOptional.isEmpty());
     }
@@ -102,9 +99,9 @@ public class UserServiceImplTests
         UserDTO userDTO = new UserDTO("firstname1", "lastname1", "username1", "password1",
                 Set.of(accountDTOLight1, accountDTOLight2));
 
-        userService.create(userDTO);
+        userCRUDService.create(userDTO);
 
-        Optional<UserDTO> userDTOFromDbOptional = userService.findByUsername("username1");
+        Optional<UserDTO> userDTOFromDbOptional = userCRUDService.findByUsername("username1");
 
         assertTrue(userDTOFromDbOptional.isPresent());
 
@@ -117,7 +114,7 @@ public class UserServiceImplTests
 
         assertEquals(2, userDTOFromDb.getAccountDTOLights().size());
 
-        userService.delete(userDTO);
+        userCRUDService.delete(userDTO);
     }
 
     @Test
@@ -125,13 +122,13 @@ public class UserServiceImplTests
     public void throwsUserAlreadyExistExceptionIfUserWIthThisUsernameExists()
     {
         UserDTO userDTO1 = new UserDTO("firstname1", "lastname1", "username1", "password1", new HashSet<>());
-        userService.create(userDTO1);
+        userCRUDService.create(userDTO1);
 
         UserDTO userDTO2 = new UserDTO("firstname2", "lastname2", "username1", "password2", new HashSet<>());
 
-        assertThrows(UserAlreadyExistsExseption.class, () -> userService.create(userDTO2));
+        assertThrows(UserAlreadyExistsExseption.class, () -> userCRUDService.create(userDTO2));
 
-        userService.delete(userDTO1);
+        userCRUDService.delete(userDTO1);
     }
 
     @Test
@@ -143,14 +140,14 @@ public class UserServiceImplTests
         UserDTO userDTO = new UserDTO("firstname1", "lastname1", "username1", "password1",
                 Set.of(accountDTOLight1, accountDTOLight2));
 
-        userService.create(userDTO);
+        userCRUDService.create(userDTO);
 
         userDTO.setFirstname("newName");
         userDTO.setPassword("newPassword");
 
-        userService.update(userDTO);
+        userCRUDService.update(userDTO);
 
-        Optional<UserDTO> userDTOFromDbOptional = userService.findByUsername("username1");
+        Optional<UserDTO> userDTOFromDbOptional = userCRUDService.findByUsername("username1");
 
         UserDTO userDTOFromDb = userDTOFromDbOptional.get();
 
@@ -161,7 +158,7 @@ public class UserServiceImplTests
 
         assertEquals(2, userDTOFromDb.getAccountDTOLights().size());
 
-        userService.delete(userDTO);
+        userCRUDService.delete(userDTO);
     }
 
     @Test
@@ -170,7 +167,7 @@ public class UserServiceImplTests
     {
         UserDTO userDTO1 = new UserDTO("firstname1", "lastname1", "username1", "password1", new HashSet<>());
 
-        assertThrows(UserNotFoundException.class, () -> userService.update(userDTO1));
+        assertThrows(UserNotFoundException.class, () -> userCRUDService.update(userDTO1));
 
     }
 
@@ -183,17 +180,17 @@ public class UserServiceImplTests
         UserDTO userDTO = new UserDTO("firstname1", "lastname1", "username1", "password1",
                 Set.of(accountDTOLight1, accountDTOLight2));
 
-        userService.create(userDTO);
+        userCRUDService.create(userDTO);
 
-        final List<UserDTO> allUsers = userService.findAll();
+        final List<UserDTO> allUsers = userCRUDService.findAll();
         assertEquals(1, allUsers.size());
 
-        userService.delete(userDTO);
+        userCRUDService.delete(userDTO);
 
-        final List<UserDTO> allUsersAfterDelete = userService.findAll();
+        final List<UserDTO> allUsersAfterDelete = userCRUDService.findAll();
         assertEquals(0, allUsersAfterDelete.size());
 
-        final List<AccountDTO> allAccounts = accountService.findAll();
+        final List<AccountDTO> allAccounts = accountCRUDService.findAll();
         assertEquals(0, allAccounts.size());
     }
 }

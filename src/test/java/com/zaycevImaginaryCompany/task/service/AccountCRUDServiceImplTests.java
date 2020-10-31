@@ -1,6 +1,5 @@
 package com.zaycevImaginaryCompany.task.service;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,10 +16,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
-public class AccountServiceImplTests
+public class AccountCRUDServiceImplTests
 {
     @Autowired
-    private AccountService accountService;
+    private AccountCRUDService accountCRUDService;
 
     @Autowired
     private AccountRepository accountRepository;
@@ -33,15 +32,15 @@ public class AccountServiceImplTests
         AccountDTO accountDTO1 = new AccountDTO(userDTOLight, 1L, 100);
         AccountDTO accountDTO2 = new AccountDTO(userDTOLight, 2L, 200);
 
-        accountService.create(accountDTO1);
-        accountService.create(accountDTO2);
+        accountCRUDService.create(accountDTO1);
+        accountCRUDService.create(accountDTO2);
 
-        final List<AccountDTO> allAccountDTOs = accountService.findAll();
+        final List<AccountDTO> allAccountDTOs = accountCRUDService.findAll();
 
         assertEquals(2, allAccountDTOs.size());
 
-        accountService.delete(accountDTO1);
-        accountService.delete(accountDTO2);
+        accountCRUDService.delete(accountDTO1);
+        accountCRUDService.delete(accountDTO2);
 
     }
 
@@ -52,14 +51,14 @@ public class AccountServiceImplTests
         UserDTOLight userDTOLight = new UserDTOLight("firstname2", "lastname2", "username2", "passwor2");
         AccountDTO accountDTO = new AccountDTO(userDTOLight, 3L, 100);
 
-        accountService.create(accountDTO);
+        accountCRUDService.create(accountDTO);
 
-        final Optional<AccountDTO> foundAccountDTO = accountService.findByAccountNumber(3L);
+        final Optional<AccountDTO> foundAccountDTO = accountCRUDService.findByAccountNumber(3L);
 
         assertTrue(foundAccountDTO.isPresent());
         assertEquals(100, foundAccountDTO.get().getAmount());
 
-        accountService.delete(accountDTO);
+        accountCRUDService.delete(accountDTO);
     }
 
     @Test
@@ -69,7 +68,7 @@ public class AccountServiceImplTests
         UserDTOLight userDTOLight = new UserDTOLight("firstname3", "lastname3", "username3", "password3");
         AccountDTO accountDTO = new AccountDTO(userDTOLight, 4L, 100);
 
-        final Optional<AccountDTO> foundAccountDTO = accountService.findByAccountNumber(4L);
+        final Optional<AccountDTO> foundAccountDTO = accountCRUDService.findByAccountNumber(4L);
 
         assertTrue(foundAccountDTO.isEmpty());
 
@@ -82,14 +81,14 @@ public class AccountServiceImplTests
         UserDTOLight userDTOLight = new UserDTOLight("firstname5", "lastname5", "username5", "password5");
         AccountDTO accountDTO = new AccountDTO(userDTOLight, 6L, 100);
 
-        accountService.create(accountDTO);
+        accountCRUDService.create(accountDTO);
 
-        final Optional<AccountDTO> foundAccountDTO = accountService.findByAccountNumber(6L);
+        final Optional<AccountDTO> foundAccountDTO = accountCRUDService.findByAccountNumber(6L);
 
         assertTrue(foundAccountDTO.isPresent());
         assertEquals(100, foundAccountDTO.get().getAmount());
 
-        accountService.delete(accountDTO);
+        accountCRUDService.delete(accountDTO);
     }
 
     @Test
@@ -99,18 +98,18 @@ public class AccountServiceImplTests
         UserDTOLight userDTOLight = new UserDTOLight("firstname6", "lastname6", "username6", "password6");
         AccountDTO accountDTO = new AccountDTO(userDTOLight, 7L, 100);
 
-        accountService.create(accountDTO);
+        accountCRUDService.create(accountDTO);
 
         accountDTO.setAmount(200);
 
-        accountService.update(accountDTO);
+        accountCRUDService.update(accountDTO);
 
-        final Optional<AccountDTO> foundAccountDTO = accountService.findByAccountNumber(7L);
+        final Optional<AccountDTO> foundAccountDTO = accountCRUDService.findByAccountNumber(7L);
 
         assertTrue(foundAccountDTO.isPresent());
         assertEquals(200, foundAccountDTO.get().getAmount());
 
-        accountService.delete(accountDTO);
+        accountCRUDService.delete(accountDTO);
     }
 
     @Test
@@ -119,7 +118,7 @@ public class AccountServiceImplTests
     {
         AccountDTO accountDTO = new AccountDTO(new UserDTOLight(), 4783123123554L, 100);
 
-        assertThrows(AccountNotFoundException.class, () -> accountService.update(accountDTO));
+        assertThrows(AccountNotFoundException.class, () -> accountCRUDService.update(accountDTO));
     }
 
     @Test
@@ -129,11 +128,11 @@ public class AccountServiceImplTests
         UserDTOLight userDTOLight = new UserDTOLight("firstname7", "lastname7", "username7", "password7");
         AccountDTO accountDTO = new AccountDTO(userDTOLight, 8L, 100);
 
-        accountService.create(accountDTO);
+        accountCRUDService.create(accountDTO);
 
-        accountService.delete(accountDTO);
+        accountCRUDService.delete(accountDTO);
 
-        final Optional<AccountDTO> foundAccountDTO = accountService.findByAccountNumber(8L);
+        final Optional<AccountDTO> foundAccountDTO = accountCRUDService.findByAccountNumber(8L);
 
         assertTrue(foundAccountDTO.isEmpty());
     }

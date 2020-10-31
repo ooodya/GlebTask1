@@ -19,10 +19,10 @@ import static org.junit.jupiter.api.Assertions.*;
 public class AccountTransferServiceTests
 {
     @Autowired
-    private UserService userService;
+    private UserCRUDService userCRUDService;
 
     @Autowired
-    private AccountService accountService;
+    private AccountCRUDService accountCRUDService;
 
     @Autowired
     private AccountTransferService transferService;
@@ -40,13 +40,13 @@ public class AccountTransferServiceTests
     @BeforeEach
     public void setUp()
     {
-        userService.create(userDTO);
+        userCRUDService.create(userDTO);
     }
 
     @AfterEach
     public void cleanUp()
     {
-        userService.delete(userDTO);
+        userCRUDService.delete(userDTO);
     }
 
     @Test
@@ -85,8 +85,8 @@ public class AccountTransferServiceTests
 
         assertTrue(transferService.transfer(destinationAccountNumber, sourceAccountNumber, amount).isPresent());
 
-        Optional<AccountDTO> sourceAccountDTO = accountService.findByAccountNumber(sourceAccountNumber);
-        Optional<AccountDTO> destinationAccountDTO = accountService.findByAccountNumber(destinationAccountNumber);
+        Optional<AccountDTO> sourceAccountDTO = accountCRUDService.findByAccountNumber(sourceAccountNumber);
+        Optional<AccountDTO> destinationAccountDTO = accountCRUDService.findByAccountNumber(destinationAccountNumber);
 
         assertEquals(sourceAmount - amount, sourceAccountDTO.get().getAmount());
         assertEquals(destinationAmount + amount, destinationAccountDTO.get().getAmount());
@@ -112,7 +112,7 @@ public class AccountTransferServiceTests
     {
         transferService.addMoney(sourceAccountNumber, 1000);
 
-        final Optional<AccountDTO> accountDTOOptional = accountService.findByAccountNumber(sourceAccountNumber);
+        final Optional<AccountDTO> accountDTOOptional = accountCRUDService.findByAccountNumber(sourceAccountNumber);
 
         assertEquals(sourceAmount + 1000, accountDTOOptional.get().getAmount());
     }

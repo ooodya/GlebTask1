@@ -13,7 +13,7 @@ import java.util.Optional;
 public class AccountTransferServiceImpl implements AccountTransferService
 {
 	@Autowired
-	private AccountService accountService;
+	private AccountCRUDService accountCRUDService;
 	
 	@Override
 	public Optional<AccountDTO> transfer(long destinationAccNumber, long sourceAccNumber, int amount)
@@ -23,8 +23,8 @@ public class AccountTransferServiceImpl implements AccountTransferService
 			return Optional.empty();
 		}
 
-		final Optional<AccountDTO> sourceAccountDTO = accountService.findByAccountNumber(sourceAccNumber);
-		final Optional<AccountDTO> destinationAccountDTO = accountService.findByAccountNumber(destinationAccNumber);
+		final Optional<AccountDTO> sourceAccountDTO = accountCRUDService.findByAccountNumber(sourceAccNumber);
+		final Optional<AccountDTO> destinationAccountDTO = accountCRUDService.findByAccountNumber(destinationAccNumber);
 
 		if (sourceAccountDTO.isEmpty())
 		{
@@ -46,8 +46,8 @@ public class AccountTransferServiceImpl implements AccountTransferService
 		sourceDTO.setAmount(sourceDTO.getAmount() - amount);
 		destinationDTO.setAmount(destinationDTO.getAmount() + amount);
 
-		accountService.update(sourceDTO);
-		accountService.update(destinationDTO);
+		accountCRUDService.update(sourceDTO);
+		accountCRUDService.update(destinationDTO);
 
 		return Optional.of(sourceDTO);
 	}
@@ -60,7 +60,7 @@ public class AccountTransferServiceImpl implements AccountTransferService
 			return Optional.empty();
 		}
 
-		final Optional<AccountDTO> accountDTOOptional = accountService.findByAccountNumber(accountNumber);
+		final Optional<AccountDTO> accountDTOOptional = accountCRUDService.findByAccountNumber(accountNumber);
 
 		if (accountDTOOptional.isEmpty())
 		{
@@ -70,7 +70,7 @@ public class AccountTransferServiceImpl implements AccountTransferService
 		AccountDTO accountDTO = accountDTOOptional.get();
 		accountDTO.setAmount(accountDTO.getAmount() + amount);
 
-		accountService.update(accountDTO);
+		accountCRUDService.update(accountDTO);
 
 		return Optional.of(accountDTO);
 	}

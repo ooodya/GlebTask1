@@ -10,19 +10,17 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.zaycevImaginaryCompany.task.service.UserService;
+import com.zaycevImaginaryCompany.task.service.UserCRUDService;
 
 @Controller
 @PropertySource("classpath:messages.properties")
 public class UserController
 {
 	@Autowired
-	private UserService userService;
+	private UserCRUDService userCRUDService;
 
 	@Value("${validation.user.username.alreadyExists}")
 	private String usernameExistsErrorMessage;
@@ -52,12 +50,9 @@ public class UserController
 		{
 			return "register";
 		}
-
-		userService.create(userDTO);
 		//securityService.autoLogin(user.getUsername(), user.getPassword());
 
-		model.addAttribute("userDTO", userDTO);
-		return "userAccounts";
+		return registerUser(userDTO, model);
 	}
 	
 	@GetMapping("/login")
@@ -67,12 +62,21 @@ public class UserController
 		return "login";
 	}
 
-	@ExceptionHandler(UserAlreadyExistsExseption.class)
-	public String UserAlreadyExistsExceptionHandler(Model model)
+	private String registerUser(UserDTO userDTO, Model model)
 	{
-		model.addAttribute("userDTO", new UserDTO());
-		model.addAttribute("usernameExistsErrorMessage", usernameExistsErrorMessage);
-		return "register";
+		try
+		{
+			userCRUDService.create(userDTO);
+		}
+		catch (UserAlreadyExistsExseption e)
+		{
+			model.addAttribute("usernameExistsErrorMessage", usernameExistsErrorMessage);
+			model.addAttribute("userDTO", userDTO);
+			return "register";
+		}
+
+		model.addAttribute("userDTO", userDTO);
+		return "userAccounts";
 	}
 	
 }

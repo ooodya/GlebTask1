@@ -1,19 +1,16 @@
 package com.zaycevImaginaryCompany.task.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zaycevImaginaryCompany.task.domain.UserDTO;
-import com.zaycevImaginaryCompany.task.service.UserService;
+import com.zaycevImaginaryCompany.task.service.UserCRUDService;
 import lombok.SneakyThrows;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.HashSet;
 
@@ -29,9 +26,10 @@ public class UserControllerTests
     private MockMvc mockMvc;
 
     @MockBean
-    private UserService userService;
+    private UserCRUDService userCRUDService;
 
     @Test
+    @DisplayName("Controller handles get request to /register")
     @SneakyThrows
     public void controllerListensToRegisterGetRequest()
     {
@@ -39,6 +37,7 @@ public class UserControllerTests
     }
 
     @Test
+    @DisplayName("Controller handles get request to /login")
     @SneakyThrows
     public void controllerListensToLoginGetRequest()
     {
@@ -46,6 +45,7 @@ public class UserControllerTests
     }
 
     @Test
+    @DisplayName("UserCRUDService is called when registering user")
     @SneakyThrows
     public void testUserServiceIsCalled()
     {
@@ -59,10 +59,11 @@ public class UserControllerTests
 
         mockMvc.perform(request);
 
-        Mockito.verify(userService).create(userDTO);
+        Mockito.verify(userCRUDService).create(userDTO);
     }
 
     @Test
+    @DisplayName("UserDTO is validated")
     @SneakyThrows
     public void userDTOIsValidated()
     {
