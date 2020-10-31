@@ -1,13 +1,17 @@
 package com.zaycevImaginaryCompany.task.controller;
 
+import com.zaycevImaginaryCompany.task.domain.AccountDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.zaycevImaginaryCompany.task.service.AccountService;
 import com.zaycevImaginaryCompany.task.service.AccountTransferService;
+
+import java.util.Optional;
 
 @Controller
 public class AccountController
@@ -19,75 +23,36 @@ public class AccountController
 	private AccountTransferService transferService;
 	
 	@PostMapping("/addAmount")
-	public String addAmount(@RequestParam String amount, @RequestParam String accountNumber,  Model model)
+	public String addAmount(@RequestParam int amountToAdd, @ModelAttribute AccountDTO accountDTO, Model model)
 	{
-		long accNumber = 0;
-		if (!accountNumber.isEmpty())
+		final Optional<AccountDTO> accountDTOOptional = transferService.addMoney(accountDTO.getAccountNumber(), amountToAdd);
+		if (accountDTOOptional.isEmpty())
 		{
-			accNumber = Long.parseLong(accountNumber);
+			model.addAttribute("addingAmountError", "");
+			model.addAttribute("accountDTO", accountDTO);
 		}
-		int iAmount = 0;
-		if (!amount.isEmpty())
+		else
 		{
-			iAmount = Integer.parseInt(amount);
-			if (iAmount < 0)
-			{
-				iAmount = -iAmount;
-			}
+			model.addAttribute("accountDTO", accountDTOOptional.get());
 		}
 			
-		/*Account account = accountService.findByAccountNumber(accNumber).orElse(null);
-		account.setAmount(account.getAmount() + iAmount);
-		accountService.save(account);
-		
-		model.addAttribute("account", account);*/
-		
 		return "account";
 	}
 	
 	@PostMapping("/transferMoney")
-	public String transferMoney(@RequestParam String accountNumber, @RequestParam String transferAmount, @RequestParam String destinationAccountNumber,  Model model)
+	public String transferMoney(@ModelAttribute AccountDTO sourceAccountDTO, @RequestParam long destinationAccountNumber, @RequestParam int transferAmount, Model model)
 	{
-		long accNumber = 0;
-		if (!accountNumber.isEmpty())
-		{
-			accNumber = Long.parseLong(accountNumber);
-		}
-		/*Account account = accountService.findByAccountNumber(accNumber).orElse(null);
-		model.addAttribute("account", account);*/
-		
-		long destAccNum = 0; 
-		if (!destinationAccountNumber.isEmpty())
-		{
-			destAccNum = Long.parseLong(destinationAccountNumber);
-		}
-		else
-		{
-			model.addAttribute("transferDestinationAccountError", "");
-			return "account";
-		}
-		
-		int amountToTransfer = 0;
-		if (!transferAmount.isEmpty())
-		{
-			amountToTransfer = Integer.parseInt(transferAmount);
-		}
-		else
-		{
-			model.addAttribute("transferAmountError", "");
-			return "account";
-		}
-		
-		/*if (transferService.transfer(destAccNum, accNumber, amountToTransfer))
+		final Optional<AccountDTO> sourceAccountDTOAfterTransferOptional = transferService.transfer(destinationAccountNumber, sourceAccountDTO.getAccountNumber(), transferAmount);
+		if (sourceAccountDTOAfterTransferOptional.isPresent())
 		{
 			model.addAttribute("transferSuccess", "");
-			account = accountService.findByAccountNumber(accNumber).orElse(null);
-			model.addAttribute("account", account);
+			model.addAttribute("accountDTO", sourceAccountDTOAfterTransferOptional.get());
 		}
 		else
 		{
 			model.addAttribute("transferFail", "");
-		}*/
+			model.addAttribute("accountDTO", sourceAccountDTO);
+		}
 		
 		return "account";
 	}

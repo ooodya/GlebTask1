@@ -16,18 +16,23 @@
 		</thead>
 		<tbody>
 			<tr>
-				<td width="200" th:text="${account.getAccountNumber()}"></td>
-				<td width="200" th:text="${account.getAmount()}"></td>
+				<td width="200" th:text="${accountDTO.getAccountNumber()}"></td>
+				<td width="200" th:text="${accountDTO.getAmount()}"></td>
 				<td>
-					<form th:action="@{/addAmount}" method="POST">
-						<input type="number" name="amount" id="amount"/> 
-						<input type="hidden" name="accountNumber" id="accountNumber" th:value="${account.getAccountNumber()}"/> 
+					<form action="#" th:action="@{/addAmount}" th:object="${accountDTO}" method="POST">
+						<input type="number" name="amountToAdd" id="amountToAdd"/>
+						<input type="hidden" th:field="*{accountNumber}" th:value="${accountDTO.getAccountNumber()}"/>
+						<input type="hidden" th:field="*{amount}" th:value="${accountDTO.getAmount()}"/>
 						<input type="submit" value="Add money"></input>
 					</form>
 				</td>
 			</tr>
 		</tbody>
 	</table>
+
+	<p>
+		<span style="color:red" th:if ="${addingAmountError != null}" th:text = "#{account.amount.incorrect}"></span>
+	</p>
 	
 	<p></p>
 	<p></p>
@@ -47,8 +52,9 @@
 		<tbody>
 			<tr>
 				<td >
-					<form th:action="@{/transferMoney}" method="POST">
-						<input type="hidden" name="accountNumber" id="accountNumber" th:value="${account.getAccountNumber()}"/> 
+					<form action="#" th:action="@{/transferMoney}" th:object="${accountDTO}" method="POST">
+						<input type="hidden" th:field="*{accountNumber}" th:value="${accountDTO.getAccountNumber()}"/>
+						<input type="hidden" th:field="*{amount}" th:value="${accountDTO.getAmount()}"/>
 						<input type="number" name="destinationAccountNumber" id="destinationAccountNumber"/> 
 						<input type="number" name="transferAmount" id="transferAmount"/> 
 						<input type="submit" value="Transfer money"></input>
@@ -59,8 +65,8 @@
 	</table>
 	
 	<p>
-		<span style="color:red" th:if ="${transferDestinationAccountError != null}" th:text = "#{account.transfer.destinationAccount.empty}"></span>
-		<span style="color:red" th:if ="${transferAmountError != null}" th:text = "#{account.transfer.amount.empty}"></span>
+		<span style="color:red" th:if ="${noDestinationAccount != null}" th:text = "#{account.transfer.account.empty}"></span>
+		<span style="color:red" th:if ="${transferAmountError != null}" th:text = "#{account.amount.incorrect}"></span>
 	</p>
 
 	<p></p>

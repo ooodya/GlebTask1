@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AccountDTO
 {
-	private UserDTOLight userDTOLight;
+	private UserDTOLight userDTOLight = new UserDTOLight();
 
 	private long accountNumber;
 	

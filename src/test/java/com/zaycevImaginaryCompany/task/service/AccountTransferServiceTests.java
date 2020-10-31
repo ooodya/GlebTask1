@@ -3,6 +3,7 @@ package com.zaycevImaginaryCompany.task.service;
 import com.zaycevImaginaryCompany.task.domain.AccountDTO;
 import com.zaycevImaginaryCompany.task.domain.AccountDTOLight;
 import com.zaycevImaginaryCompany.task.domain.UserDTO;
+import com.zaycevImaginaryCompany.task.exceptions.AccountNotFoundException;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -52,28 +53,28 @@ public class AccountTransferServiceTests
     @DisplayName("Transfer fails if transfer amount < 0")
     public void transferFailsIfNegativeAmount()
     {
-        assertFalse(transferService.transfer(destinationAccountNumber, sourceAccountNumber, -100));
+        assertFalse(transferService.transfer(destinationAccountNumber, sourceAccountNumber, -100).isPresent());
     }
 
     @Test
-    @DisplayName("Transfer fails if wrong source account")
-    public void transferFailsIfNoSuchSourceExists()
+    @DisplayName("Transfer throws AccountNotFoundException if no source account")
+    public void transferThrowsAccountNotFoundExceptionIfNoSuchSourceExists()
     {
-        assertFalse(transferService.transfer(destinationAccountNumber, 4656234234L, 100));
+        assertThrows(AccountNotFoundException.class, () -> transferService.transfer(destinationAccountNumber, 4656234234L, 100));
     }
 
     @Test
-    @DisplayName("Transfer fails if wrong destination account")
-    public void transferFailsIfNoSuchDestinationExists()
+    @DisplayName("Transfer throws AccountNotFoundException if no destination account")
+    public void transferThrowsAccountNotFoundExceptionIfNoSuchDestinationExists()
     {
-        assertFalse(transferService.transfer(867435233L, sourceAccountNumber, 100));
+        assertThrows(AccountNotFoundException.class, () -> transferService.transfer(867435233L, sourceAccountNumber, 100));
     }
 
     @Test
     @DisplayName("Transfer fails if source dont have enough money")
     public void transferFailsIfSourceHasNotEnoughMoney()
     {
-        assertFalse(transferService.transfer(destinationAccountNumber, sourceAccountNumber, sourceAmount + 1000));
+        assertFalse(transferService.transfer(destinationAccountNumber, sourceAccountNumber, sourceAmount + 1000).isPresent());
     }
 
     @Test
@@ -82,12 +83,37 @@ public class AccountTransferServiceTests
     {
         int amount = 200;
 
-        assertTrue(transferService.transfer(destinationAccountNumber, sourceAccountNumber, amount));
+        assertTrue(transferService.transfer(destinationAccountNumber, sourceAccountNumber, amount).isPresent());
 
         Optional<AccountDTO> sourceAccountDTO = accountService.findByAccountNumber(sourceAccountNumber);
         Optional<AccountDTO> destinationAccountDTO = accountService.findByAccountNumber(destinationAccountNumber);
 
         assertEquals(sourceAmount - amount, sourceAccountDTO.get().getAmount());
         assertEquals(destinationAmount + amount, destinationAccountDTO.get().getAmount());
+    }
+
+    @Test
+    @DisplayName("Cant add negative amount")
+    public void addingMoneyFailsIfNegativeAmount()
+    {
+        assertFalse(transferService.addMoney(sourceAccountNumber, -100).isPresent());
+    }
+
+    @Test
+    @DisplayName("Adding money throws AccountNotFoundException if no source account")
+    public void addingMoneyThrowsAccountNotFoundExceptionIfNoSuchSourceExists()
+    {
+        assertThrows(AccountNotFoundException.class, () -> transferService.addMoney(1341244324L, 1000));
+    }
+
+    @Test
+    @DisplayName("Money can be added to account")
+    public void canAddMoneyToAccount()
+    {
+        transferService.addMoney(sourceAccountNumber, 1000);
+
+        final Optional<AccountDTO> accountDTOOptional = accountService.findByAccountNumber(sourceAccountNumber);
+
+        assertEquals(sourceAmount + 1000, accountDTOOptional.get().getAmount());
     }
 }

@@ -1,9 +1,7 @@
 package com.zaycevImaginaryCompany.task.domain;
 
 import java.io.Serializable;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -52,7 +50,7 @@ public class User implements Serializable
 	//@org.hibernate.annotations.OnDelete(action = org.hibernate.annotations.OnDeleteAction.CASCADE)
 	@EqualsAndHashCode.Exclude
 	@ToString.Exclude
-	private Set<Account> accounts = new HashSet<>();
+	private List<Account> accounts = new ArrayList<>();
 
 	public User(String firstname, String lastname, String username, String password, Set<Account> accounts)
 	{
@@ -62,7 +60,7 @@ public class User implements Serializable
 		this.password = password;
 		
 		accounts.forEach(a -> a.setOwner(this)); 		
-		this.accounts = accounts;
+		this.accounts = new ArrayList<>(accounts);
 	}
 
 	public void addAccount(Account account)
@@ -82,13 +80,13 @@ public class User implements Serializable
 
 	public Set<Account> getAccounts()
 	{
-		return Collections.unmodifiableSet(accounts);
+		return Collections.unmodifiableSet(new HashSet<Account>(accounts));
 	}
 	
 	public void setAccounts(Set<Account> accounts)
 	{
 		accounts.forEach(a -> a.setOwner(this)); 
 		
-		this.accounts = accounts;
+		this.accounts = new ArrayList<>(accounts);
 	}
 }

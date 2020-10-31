@@ -1,6 +1,5 @@
 package com.zaycevImaginaryCompany.task.controller;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import com.zaycevImaginaryCompany.task.domain.UserDTO;
@@ -16,10 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.zaycevImaginaryCompany.task.domain.User;
 import com.zaycevImaginaryCompany.task.service.UserService;
-
-import java.net.http.HttpResponse;
 
 @Controller
 @PropertySource("classpath:messages.properties")
@@ -58,10 +54,9 @@ public class UserController
 		}
 
 		userService.create(userDTO);
-
 		//securityService.autoLogin(user.getUsername(), user.getPassword());
+
 		model.addAttribute("userDTO", userDTO);
-		
 		return "userAccounts";
 	}
 	

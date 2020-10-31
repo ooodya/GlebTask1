@@ -32,6 +32,7 @@ public class Account
 	private long accountNumber;
 	
 	@Column(name  = "amount")
+	@EqualsAndHashCode.Exclude
 	private int amount;
 		
 	public void setOwner(User owner)

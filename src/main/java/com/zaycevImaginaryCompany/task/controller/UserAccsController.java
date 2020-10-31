@@ -62,15 +62,15 @@ public class UserAccsController
 		}*/
 		return "userAccounts";
 	}
-	
+
 	private long generateAccountNumber()
 	{
-		long accNum = ThreadLocalRandom.current().nextLong(1000000L, 9999999L);
-		while (accountService.findByAccountNumber(accNum).isPresent())
+		long accountNumber = ThreadLocalRandom.current().nextLong(1000000L, 9999999L);
+		while (accountService.findByAccountNumber(accountNumber).isPresent())
 		{
-			accNum = ThreadLocalRandom.current().nextLong(1000000L, 9999999L);
+			accountNumber = ThreadLocalRandom.current().nextLong(1000000L, 9999999L);
 		}
-		
-		return accNum;
+
+		return accountNumber;
 	}
 }

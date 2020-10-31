@@ -13,12 +13,14 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.HashSet;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 
 @WebMvcTest(UserController.class)
 public class UserControllerTests
@@ -52,10 +54,10 @@ public class UserControllerTests
         RequestBuilder request = post("/register")
                 .param("firstname", "firstname")
                 .param("lastname", "lastname")
-                .param("username", "")
+                .param("username", "username")
                 .param("password","password");
 
-        mockMvc.perform(request).andExpect(status().isBadRequest());
+        mockMvc.perform(request);
 
         Mockito.verify(userService).create(userDTO);
     }
@@ -65,11 +67,12 @@ public class UserControllerTests
     public void userDTOIsValidated()
     {
         RequestBuilder request = post("/register")
-                .param("firstname", "firstname")
-                .param("lastname", "lastname")
+                .param("firstname", "")
+                .param("lastname", "")
                 .param("username", "")
-                .param("password","password");
+                .param("password","");
 
-        mockMvc.perform(request).andExpect(status().isBadRequest());
+        mockMvc.perform(request).andExpect(model().attributeHasFieldErrors("userDTO",
+                "firstname", "lastname", "username", "password"));
     }
 }
