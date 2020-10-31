@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 
 import lombok.AccessLevel;
 import lombok.Data;
@@ -80,7 +79,7 @@ public class User implements Serializable
 
 	public Set<Account> getAccounts()
 	{
-		return Collections.unmodifiableSet(new HashSet<Account>(accounts));
+		return Set.copyOf(new HashSet<>(accounts));
 	}
 	
 	public void setAccounts(Set<Account> accounts)

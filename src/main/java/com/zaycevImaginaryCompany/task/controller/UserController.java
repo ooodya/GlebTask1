@@ -2,8 +2,11 @@ package com.zaycevImaginaryCompany.task.controller;
 
 import javax.validation.Valid;
 
+import com.zaycevImaginaryCompany.task.domain.User;
 import com.zaycevImaginaryCompany.task.domain.UserDTO;
 import com.zaycevImaginaryCompany.task.exceptions.UserAlreadyExistsExseption;
+import com.zaycevImaginaryCompany.task.security.SecurityService;
+import com.zaycevImaginaryCompany.task.service.UserCreator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
@@ -13,14 +16,15 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.zaycevImaginaryCompany.task.service.UserCRUDService;
-
 @Controller
 @PropertySource("classpath:messages.properties")
 public class UserController
 {
 	@Autowired
-	private UserCRUDService userCRUDService;
+	private UserCreator userCreator;
+
+	@Autowired
+	private SecurityService securityService;
 
 	@Value("${validation.user.username.alreadyExists}")
 	private String usernameExistsErrorMessage;
@@ -28,11 +32,11 @@ public class UserController
 	@GetMapping("/")
 	public String goToStartingPage(Model model)
 	{
-		/*String username = securityService.getLoggedInUsername();
+		String username = securityService.getLoggedUsername();
 		if (username != null)
 		{
 			model.addAttribute("userLogged", "userLogged");
-		}*/
+		}
 		return "startpage";
 	}
 
@@ -50,7 +54,6 @@ public class UserController
 		{
 			return "register";
 		}
-		//securityService.autoLogin(user.getUsername(), user.getPassword());
 
 		return registerUser(userDTO, model);
 	}
@@ -58,7 +61,6 @@ public class UserController
 	@GetMapping("/login")
 	public String goToLoginUserPage(Model model)
 	{
-		model.addAttribute("userDTO", new UserDTO());
 		return "login";
 	}
 
@@ -66,7 +68,7 @@ public class UserController
 	{
 		try
 		{
-			userCRUDService.create(userDTO);
+			userCreator.createUser(userDTO);
 		}
 		catch (UserAlreadyExistsExseption e)
 		{

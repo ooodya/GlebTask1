@@ -66,7 +66,6 @@ public class AccountCRUDServiceImplTests
     public void findByAccountNumberShouldReturnEmptyOptionalIfNotExists()
     {
         UserDTOLight userDTOLight = new UserDTOLight("firstname3", "lastname3", "username3", "password3");
-        AccountDTO accountDTO = new AccountDTO(userDTOLight, 4L, 100);
 
         final Optional<AccountDTO> foundAccountDTO = accountCRUDService.findByAccountNumber(4L);
 

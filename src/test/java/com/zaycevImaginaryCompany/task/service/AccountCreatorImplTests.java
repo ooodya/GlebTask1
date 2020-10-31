@@ -1,7 +1,6 @@
 package com.zaycevImaginaryCompany.task.service;
 
 import com.zaycevImaginaryCompany.task.domain.AccountDTO;
-import com.zaycevImaginaryCompany.task.domain.AccountDTOLight;
 import com.zaycevImaginaryCompany.task.domain.UserDTO;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,7 +25,7 @@ class AccountCreatorImplTests
     @Autowired
     private AccountCreator accountCreator;
 
-    UserDTO userDTO = new UserDTO("firstname", "lastname", "username", "password", new HashSet<>());
+    final UserDTO userDTO = new UserDTO("firstname", "lastname", "username", "password", new HashSet<>());
 
     @BeforeEach
     public void setUp()

@@ -14,8 +14,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -94,8 +92,8 @@ public class UserCRUDServiceImplTests
     @DisplayName("User can be created")
     public void canBeSaved()
     {
-        AccountDTOLight accountDTOLight1 = new AccountDTOLight(1l, 100);
-        AccountDTOLight accountDTOLight2 = new AccountDTOLight(2l, 200);
+        AccountDTOLight accountDTOLight1 = new AccountDTOLight(1L, 100);
+        AccountDTOLight accountDTOLight2 = new AccountDTOLight(2L, 200);
         UserDTO userDTO = new UserDTO("firstname1", "lastname1", "username1", "password1",
                 Set.of(accountDTOLight1, accountDTOLight2));
 
@@ -135,8 +133,8 @@ public class UserCRUDServiceImplTests
     @DisplayName("User can be updated")
     public void canBeUpdated()
     {
-        AccountDTOLight accountDTOLight1 = new AccountDTOLight(1l, 100);
-        AccountDTOLight accountDTOLight2 = new AccountDTOLight(2l, 200);
+        AccountDTOLight accountDTOLight1 = new AccountDTOLight(1L, 100);
+        AccountDTOLight accountDTOLight2 = new AccountDTOLight(2L, 200);
         UserDTO userDTO = new UserDTO("firstname1", "lastname1", "username1", "password1",
                 Set.of(accountDTOLight1, accountDTOLight2));
 
@@ -175,8 +173,8 @@ public class UserCRUDServiceImplTests
     @DisplayName("User can be deleted with all its accounts")
     public void canBeDeleted()
     {
-        AccountDTOLight accountDTOLight1 = new AccountDTOLight(1l, 100);
-        AccountDTOLight accountDTOLight2 = new AccountDTOLight(2l, 200);
+        AccountDTOLight accountDTOLight1 = new AccountDTOLight(1L, 100);
+        AccountDTOLight accountDTOLight2 = new AccountDTOLight(2L, 200);
         UserDTO userDTO = new UserDTO("firstname1", "lastname1", "username1", "password1",
                 Set.of(accountDTOLight1, accountDTOLight2));
 

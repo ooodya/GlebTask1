@@ -35,9 +35,7 @@ public class AccountCreatorImpl implements AccountCreator
 
         accountCRUDService.create(accountDTO);
 
-        UserDTO updatedUserDTO = userCRUDService.findByUsername(foundUserDTO.getUsername()).get();
-
-        return updatedUserDTO;
+        return userCRUDService.findByUsername(foundUserDTO.getUsername()).get();
     }
 
     private long generateAccountNumber()

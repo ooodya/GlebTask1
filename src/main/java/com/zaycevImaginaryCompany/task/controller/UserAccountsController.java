@@ -2,6 +2,7 @@ package com.zaycevImaginaryCompany.task.controller;
 
 import com.zaycevImaginaryCompany.task.domain.AccountDTO;
 import com.zaycevImaginaryCompany.task.domain.UserDTO;
+import com.zaycevImaginaryCompany.task.security.SecurityService;
 import com.zaycevImaginaryCompany.task.service.AccountCreator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,9 +26,13 @@ public class UserAccountsController
 	@Autowired
 	private AccountCreator accountCreator;
 
+	@Autowired
+	private SecurityService securityService;
+
 	@GetMapping("/userAccounts")
-	public String getUserAccounts(@RequestParam String username, Model model)
+	public String getUserAccounts(Model model)
 	{
+		String username = securityService.getLoggedUsername();
 		final UserDTO userDTO = userCRUDService.findByUsername(username).orElse(null);
 		model.addAttribute("userDTO", userDTO);
 		return "userAccounts";

@@ -3,7 +3,6 @@ package com.zaycevImaginaryCompany.task.service;
 import java.util.List;
 import java.util.Optional;
 
-import com.zaycevImaginaryCompany.task.domain.Account;
 import com.zaycevImaginaryCompany.task.domain.AccountDTO;
 
 public interface AccountCRUDService

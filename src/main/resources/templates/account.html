@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 
 <body>
 <a th:href="@{/logout}">
@@ -23,7 +23,7 @@
                 <input type="number" name="amountToAdd" id="amountToAdd"/>
                 <input type="hidden" th:field="*{accountNumber}" th:value="${accountDTO.getAccountNumber()}"/>
                 <input type="hidden" th:field="*{amount}" th:value="${accountDTO.getAmount()}"/>
-                <input type="submit" value="Add money"></input>
+                <input type="submit" value="Add money"/>
             </form>
         </td>
     </tr>
@@ -57,7 +57,7 @@
                 <input type="hidden" th:field="*{amount}" th:value="${accountDTO.getAmount()}"/>
                 <input type="number" name="destinationAccountNumber" id="destinationAccountNumber"/>
                 <input type="number" name="transferAmount" id="transferAmount"/>
-                <input type="submit" value="Transfer money"></input>
+                <input type="submit" value="Transfer money"/>
             </form>
         </td>
     </tr>
@@ -73,7 +73,6 @@
 <p></p>
 <p></p>
 <a th:href="@{/userAccounts}">
-    <input type="hidden" name="username" id="username" th:value="${accountDTO.getUserDTOLight().getUsername()}"/>
     <button>My accounts</button>
 </a>
 </body>
