@@ -1,13 +1,15 @@
 package com.zaycevImaginaryCompany.task.controller;
 
-import com.zaycevImaginaryCompany.task.domain.UserDTO;
+import com.zaycevImaginaryCompany.task.dto.UserDTO;
 import com.zaycevImaginaryCompany.task.service.UserCRUDService;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
@@ -19,7 +21,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 
-@WebMvcTest(UserController.class)
+@SpringBootTest
+@AutoConfigureMockMvc
 public class UserControllerTests
 {
     @Autowired
@@ -49,8 +52,6 @@ public class UserControllerTests
     @SneakyThrows
     public void testUserServiceIsCalled()
     {
-        UserDTO userDTO = new UserDTO("firstname", "lastname", "username", "password", new HashSet<>());
-
         RequestBuilder request = post("/register")
                 .param("firstname", "firstname")
                 .param("lastname", "lastname")
@@ -59,7 +60,8 @@ public class UserControllerTests
 
         mockMvc.perform(request);
 
-        Mockito.verify(userCRUDService).create(userDTO);
+        ArgumentCaptor<UserDTO> userDtoCaptor = ArgumentCaptor.forClass(UserDTO.class);
+        Mockito.verify(userCRUDService).create(userDtoCaptor.capture());
     }
 
     @Test

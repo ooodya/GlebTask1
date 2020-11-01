@@ -2,7 +2,7 @@ package com.zaycevImaginaryCompany.task.service;
 
 import com.zaycevImaginaryCompany.task.dto.UserDTO;
 
-public interface UserCreator
+public interface BusinessUserService
 {
-    void createUser(UserDTO userDTO);
+    UserDTO findLoggedUser();
 }

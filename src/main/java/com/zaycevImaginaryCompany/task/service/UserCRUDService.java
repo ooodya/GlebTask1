@@ -3,7 +3,7 @@ package com.zaycevImaginaryCompany.task.service;
 import java.util.List;
 import java.util.Optional;
 
-import com.zaycevImaginaryCompany.task.domain.UserDTO;
+import com.zaycevImaginaryCompany.task.dto.UserDTO;
 
 public interface UserCRUDService
 {

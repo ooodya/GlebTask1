@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import com.zaycevImaginaryCompany.task.domain.UserDTO;
+import com.zaycevImaginaryCompany.task.dto.UserDTO;
 import com.zaycevImaginaryCompany.task.exceptions.UserAlreadyExistsExseption;
 import com.zaycevImaginaryCompany.task.exceptions.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;

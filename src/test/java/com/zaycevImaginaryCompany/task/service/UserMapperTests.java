@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Set;
 
 import com.zaycevImaginaryCompany.task.domain.*;
+import com.zaycevImaginaryCompany.task.dto.AccountDTOLite;
+import com.zaycevImaginaryCompany.task.dto.UserDTO;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -40,7 +42,7 @@ public class UserMapperTests
 		assertEquals(username, userDTO.getUsername());
 		assertEquals(password, userDTO.getPassword());
 		
-		assertEquals(2, userDTO.getAccountDTOLights().size());
+		assertEquals(2, userDTO.getAccountDTOLites().size());
 	}
 	
 	@Test
@@ -52,9 +54,9 @@ public class UserMapperTests
 		String username = "JohnnyGuitar";
 		String password = "1";
 
-		AccountDTOLight accountDTOLight1 = new AccountDTOLight(1, 100);
-		AccountDTOLight accountDTOLight2 = new AccountDTOLight(2, 200);
-		Set<AccountDTOLight> accDTOs = Set.of(accountDTOLight1, accountDTOLight2);
+		AccountDTOLite accountDTOLite1 = new AccountDTOLite(1, 100);
+		AccountDTOLite accountDTOLite2 = new AccountDTOLite(2, 200);
+		Set<AccountDTOLite> accDTOs = Set.of(accountDTOLite1, accountDTOLite2);
 
 		UserDTO userDTO = new UserDTO(firstname, lastname, username, password, accDTOs);
 
@@ -72,11 +74,11 @@ public class UserMapperTests
 	@DisplayName("List of UsertDTO should be correctly mapped to List of User")
 	public void canBeMappedToUserList()
 	{
-		AccountDTOLight accountDTOLight1 = new AccountDTOLight(1L, 100);
-		UserDTO userDTO1 = new UserDTO("Egor", "Topor", "Egrr", "123", Set.of(accountDTOLight1));
+		AccountDTOLite accountDTOLite1 = new AccountDTOLite(1L, 100);
+		UserDTO userDTO1 = new UserDTO("Egor", "Topor", "Egrr", "123", Set.of(accountDTOLite1));
 
-		AccountDTOLight accountDTOLight2 = new AccountDTOLight(2L, 200);
-		UserDTO userDTO2 = new UserDTO("Anchi", "Fedorov", "Panch", "12345", Set.of(accountDTOLight2));
+		AccountDTOLite accountDTOLite2 = new AccountDTOLite(2L, 200);
+		UserDTO userDTO2 = new UserDTO("Anchi", "Fedorov", "Panch", "12345", Set.of(accountDTOLite2));
 
 		List<User> userList = userMapper.DTOsToUsers(List.of(userDTO1, userDTO2));
 
@@ -113,13 +115,13 @@ public class UserMapperTests
 		assertEquals("Topor", userDTOList.get(0).getLastname());
 		assertEquals("Egrr", userDTOList.get(0).getUsername());
 		assertEquals("123", userDTOList.get(0).getPassword());
-		assertEquals(1, userDTOList.get(0).getAccountDTOLights().size());
+		assertEquals(1, userDTOList.get(0).getAccountDTOLites().size());
 
 		assertEquals("Anchi", userDTOList.get(1).getFirstname());
 		assertEquals("Fedorov", userDTOList.get(1).getLastname());
 		assertEquals("Panch", userDTOList.get(1).getUsername());
 		assertEquals("12345", userDTOList.get(1).getPassword());
-		assertEquals(1, userDTOList.get(1).getAccountDTOLights().size());
+		assertEquals(1, userDTOList.get(1).getAccountDTOLites().size());
 	}
 
 	@Test

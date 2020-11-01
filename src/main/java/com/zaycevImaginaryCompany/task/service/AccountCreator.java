@@ -1,6 +1,6 @@
 package com.zaycevImaginaryCompany.task.service;
 
-import com.zaycevImaginaryCompany.task.domain.UserDTO;
+import com.zaycevImaginaryCompany.task.dto.UserDTO;
 
 public interface AccountCreator
 {

@@ -1,8 +1,8 @@
 package com.zaycevImaginaryCompany.task.service;
 
-import com.zaycevImaginaryCompany.task.domain.AccountDTO;
-import com.zaycevImaginaryCompany.task.domain.UserDTO;
-import com.zaycevImaginaryCompany.task.domain.UserDTOLight;
+import com.zaycevImaginaryCompany.task.dto.AccountDTO;
+import com.zaycevImaginaryCompany.task.dto.UserDTO;
+import com.zaycevImaginaryCompany.task.dto.UserDTOLite;
 import com.zaycevImaginaryCompany.task.exceptions.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,7 +30,7 @@ public class AccountCreatorImpl implements AccountCreator
         }
 
         UserDTO foundUserDTO = foundUserDTOOptional.get();
-        AccountDTO accountDTO = new AccountDTO(new UserDTOLight(foundUserDTO.getFirstname(), foundUserDTO.getLastname(), foundUserDTO.getUsername(), foundUserDTO.getPassword()),
+        AccountDTO accountDTO = new AccountDTO(new UserDTOLite(foundUserDTO.getFirstname(), foundUserDTO.getLastname(), foundUserDTO.getUsername(), foundUserDTO.getPassword()),
                 generateAccountNumber(), 0);
 
         accountCRUDService.create(accountDTO);

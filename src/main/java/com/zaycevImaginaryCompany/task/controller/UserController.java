@@ -2,8 +2,7 @@ package com.zaycevImaginaryCompany.task.controller;
 
 import javax.validation.Valid;
 
-import com.zaycevImaginaryCompany.task.domain.User;
-import com.zaycevImaginaryCompany.task.domain.UserDTO;
+import com.zaycevImaginaryCompany.task.dto.UserDTO;
 import com.zaycevImaginaryCompany.task.exceptions.UserAlreadyExistsExseption;
 import com.zaycevImaginaryCompany.task.security.SecurityService;
 import com.zaycevImaginaryCompany.task.service.UserCreator;
@@ -15,6 +14,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import java.util.Optional;
 
 @Controller
 @PropertySource("classpath:messages.properties")
@@ -32,8 +33,8 @@ public class UserController
 	@GetMapping("/")
 	public String goToStartingPage(Model model)
 	{
-		String username = securityService.getLoggedUsername();
-		if (username != null)
+		Optional<String> usernameOptional = securityService.getLoggedUsername();
+		if (usernameOptional.isPresent())
 		{
 			model.addAttribute("userLogged", "userLogged");
 		}
@@ -59,7 +60,7 @@ public class UserController
 	}
 	
 	@GetMapping("/login")
-	public String goToLoginUserPage(Model model)
+	public String goToLoginUserPage()
 	{
 		return "login";
 	}

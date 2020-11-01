@@ -6,14 +6,18 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
-@WebMvcTest(AccountController.class)
+@SpringBootTest
+@AutoConfigureMockMvc
+@WithMockUser("username")
 class AccountControllerTests
 {
     @Autowired
@@ -27,7 +31,7 @@ class AccountControllerTests
     @SneakyThrows
     public void transferServiceIsCalledWhenAddingMoney()
     {
-        Long accountNumber = 1L;
+        long accountNumber = 1L;
         int amountToAdd = 1000;
 
         RequestBuilder request = post("/addAmount")
@@ -46,7 +50,7 @@ class AccountControllerTests
     @SneakyThrows
     public void transferServiceIsCalledWhenTransferringMoney()
     {
-        Long accountNumber = 1L;
+        long accountNumber = 1L;
         int transferAmount = 1000;
         long destinationAccountNumber = 2L;
 

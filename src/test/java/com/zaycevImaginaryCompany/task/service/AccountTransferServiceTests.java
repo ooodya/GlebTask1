@@ -1,8 +1,8 @@
 package com.zaycevImaginaryCompany.task.service;
 
-import com.zaycevImaginaryCompany.task.domain.AccountDTO;
-import com.zaycevImaginaryCompany.task.domain.AccountDTOLight;
-import com.zaycevImaginaryCompany.task.domain.UserDTO;
+import com.zaycevImaginaryCompany.task.dto.AccountDTO;
+import com.zaycevImaginaryCompany.task.dto.AccountDTOLite;
+import com.zaycevImaginaryCompany.task.dto.UserDTO;
 import com.zaycevImaginaryCompany.task.exceptions.AccountNotFoundException;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,10 +32,10 @@ public class AccountTransferServiceTests
     private final Long sourceAccountNumber = 2L;
     private final int sourceAmount = 2000;
 
-    private final AccountDTOLight accountDTOLight1 = new AccountDTOLight(destinationAccountNumber, destinationAmount);
-    private final AccountDTOLight accountDTOLight2 = new AccountDTOLight(sourceAccountNumber, sourceAmount);
+    private final AccountDTOLite accountDTOLite1 = new AccountDTOLite(destinationAccountNumber, destinationAmount);
+    private final AccountDTOLite accountDTOLite2 = new AccountDTOLite(sourceAccountNumber, sourceAmount);
     private final UserDTO userDTO = new UserDTO("firstame", "lastname", "username", "password",
-            Set.of(accountDTOLight1, accountDTOLight2));
+            Set.of(accountDTOLite1, accountDTOLite2));
 
     @BeforeEach
     public void setUp()

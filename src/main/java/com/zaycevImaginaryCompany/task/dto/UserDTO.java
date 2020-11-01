@@ -1,4 +1,4 @@
-package com.zaycevImaginaryCompany.task.domain;
+package com.zaycevImaginaryCompany.task.dto;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -26,5 +26,5 @@ public class UserDTO
 	@NotBlank(message = "{validation.user.password.empty}")
 	private String password;
 	
-	private Set<AccountDTOLight> accountDTOLights = new HashSet<>();
+	private Set<AccountDTOLite> accountDTOLites = new HashSet<>();
 }

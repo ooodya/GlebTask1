@@ -1,6 +1,6 @@
 package com.zaycevImaginaryCompany.task.service;
 
-import com.zaycevImaginaryCompany.task.domain.AccountDTO;
+import com.zaycevImaginaryCompany.task.dto.AccountDTO;
 import com.zaycevImaginaryCompany.task.exceptions.AccountNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

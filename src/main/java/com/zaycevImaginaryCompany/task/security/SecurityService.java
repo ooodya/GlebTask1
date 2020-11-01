@@ -1,8 +1,10 @@
 package com.zaycevImaginaryCompany.task.security;
 
+import java.util.Optional;
+
 public interface SecurityService
 {
-    String getLoggedUsername();
+    Optional<String> getLoggedUsername();
 
     void loginAfterRegister(String username, String password);
 }

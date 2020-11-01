@@ -5,7 +5,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-import com.zaycevImaginaryCompany.task.domain.*;
+import com.zaycevImaginaryCompany.task.dto.AccountDTO;
+import com.zaycevImaginaryCompany.task.dto.AccountDTOLite;
+import com.zaycevImaginaryCompany.task.dto.UserDTO;
 import com.zaycevImaginaryCompany.task.exceptions.UserAlreadyExistsExseption;
 import com.zaycevImaginaryCompany.task.exceptions.UserNotFoundException;
 import com.zaycevImaginaryCompany.task.repository.UserRepository;
@@ -92,10 +94,10 @@ public class UserCRUDServiceImplTests
     @DisplayName("User can be created")
     public void canBeSaved()
     {
-        AccountDTOLight accountDTOLight1 = new AccountDTOLight(1L, 100);
-        AccountDTOLight accountDTOLight2 = new AccountDTOLight(2L, 200);
+        AccountDTOLite accountDTOLite1 = new AccountDTOLite(1L, 100);
+        AccountDTOLite accountDTOLite2 = new AccountDTOLite(2L, 200);
         UserDTO userDTO = new UserDTO("firstname1", "lastname1", "username1", "password1",
-                Set.of(accountDTOLight1, accountDTOLight2));
+                Set.of(accountDTOLite1, accountDTOLite2));
 
         userCRUDService.create(userDTO);
 
@@ -110,7 +112,7 @@ public class UserCRUDServiceImplTests
         assertEquals("username1", userDTOFromDb.getUsername());
         assertEquals("password1", userDTOFromDb.getPassword());
 
-        assertEquals(2, userDTOFromDb.getAccountDTOLights().size());
+        assertEquals(2, userDTOFromDb.getAccountDTOLites().size());
 
         userCRUDService.delete(userDTO);
     }
@@ -133,10 +135,10 @@ public class UserCRUDServiceImplTests
     @DisplayName("User can be updated")
     public void canBeUpdated()
     {
-        AccountDTOLight accountDTOLight1 = new AccountDTOLight(1L, 100);
-        AccountDTOLight accountDTOLight2 = new AccountDTOLight(2L, 200);
+        AccountDTOLite accountDTOLite1 = new AccountDTOLite(1L, 100);
+        AccountDTOLite accountDTOLite2 = new AccountDTOLite(2L, 200);
         UserDTO userDTO = new UserDTO("firstname1", "lastname1", "username1", "password1",
-                Set.of(accountDTOLight1, accountDTOLight2));
+                Set.of(accountDTOLite1, accountDTOLite2));
 
         userCRUDService.create(userDTO);
 
@@ -154,7 +156,7 @@ public class UserCRUDServiceImplTests
         assertEquals("username1", userDTOFromDb.getUsername());
         assertEquals("newPassword", userDTOFromDb.getPassword());
 
-        assertEquals(2, userDTOFromDb.getAccountDTOLights().size());
+        assertEquals(2, userDTOFromDb.getAccountDTOLites().size());
 
         userCRUDService.delete(userDTO);
     }
@@ -173,10 +175,10 @@ public class UserCRUDServiceImplTests
     @DisplayName("User can be deleted with all its accounts")
     public void canBeDeleted()
     {
-        AccountDTOLight accountDTOLight1 = new AccountDTOLight(1L, 100);
-        AccountDTOLight accountDTOLight2 = new AccountDTOLight(2L, 200);
+        AccountDTOLite accountDTOLite1 = new AccountDTOLite(1L, 100);
+        AccountDTOLite accountDTOLite2 = new AccountDTOLite(2L, 200);
         UserDTO userDTO = new UserDTO("firstname1", "lastname1", "username1", "password1",
-                Set.of(accountDTOLight1, accountDTOLight2));
+                Set.of(accountDTOLite1, accountDTOLite2));
 
         userCRUDService.create(userDTO);
 

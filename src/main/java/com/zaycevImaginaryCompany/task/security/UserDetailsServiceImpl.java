@@ -3,7 +3,7 @@ package com.zaycevImaginaryCompany.task.security;
 import com.zaycevImaginaryCompany.task.domain.User;
 import com.zaycevImaginaryCompany.task.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Primary;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Set;
 
 @Service
-@Qualifier("myUserDetailService")
+@Primary
 public class UserDetailsServiceImpl implements UserDetailsService
 {
     @Autowired

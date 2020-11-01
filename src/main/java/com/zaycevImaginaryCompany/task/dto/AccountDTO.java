@@ -1,4 +1,4 @@
-package com.zaycevImaginaryCompany.task.domain;
+package com.zaycevImaginaryCompany.task.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AccountDTO
 {
-	private UserDTOLight userDTOLight = new UserDTOLight();
+	private UserDTOLite userDTOLite = new UserDTOLite();
 
 	private long accountNumber;
 	

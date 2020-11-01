@@ -3,6 +3,8 @@ package com.zaycevImaginaryCompany.task.service;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.zaycevImaginaryCompany.task.domain.*;
+import com.zaycevImaginaryCompany.task.dto.AccountDTO;
+import com.zaycevImaginaryCompany.task.dto.UserDTOLite;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -42,10 +44,10 @@ public class AccountMapperTests
 		assertEquals(accountNumber, accDTO.getAccountNumber());
 		assertEquals(amount, accDTO.getAmount());
 
-		assertEquals(firstname, accDTO.getUserDTOLight().getFirstname());
-		assertEquals(lastname, accDTO.getUserDTOLight().getLastname());
-		assertEquals(username, accDTO.getUserDTOLight().getUsername());
-		assertEquals(password, accDTO.getUserDTOLight().getPassword());
+		assertEquals(firstname, accDTO.getUserDTOLite().getFirstname());
+		assertEquals(lastname, accDTO.getUserDTOLite().getLastname());
+		assertEquals(username, accDTO.getUserDTOLite().getUsername());
+		assertEquals(password, accDTO.getUserDTOLite().getPassword());
 	}
 	
 	@Test
@@ -55,17 +57,17 @@ public class AccountMapperTests
 		long accountNumber = 123456789;
 		int amount = 1000;
 
-		UserDTOLight userDTOLight = new UserDTOLight();
+		UserDTOLite userDTOLite = new UserDTOLite();
 		String firstname = "John";
 		String lastname = "Patrik";
 		String username = "JohnnyGuitar";
 		String password = "1";
-		userDTOLight.setFirstname(firstname);
-		userDTOLight.setLastname(lastname);
-		userDTOLight.setUsername(username);
-		userDTOLight.setPassword(password);
+		userDTOLite.setFirstname(firstname);
+		userDTOLite.setLastname(lastname);
+		userDTOLite.setUsername(username);
+		userDTOLite.setPassword(password);
 		
-		AccountDTO accDTO = new AccountDTO(userDTOLight, accountNumber, amount);
+		AccountDTO accDTO = new AccountDTO(userDTOLite, accountNumber, amount);
 		
 		Account acc = accountMapper.DTOtoAccount(accDTO);
 		
@@ -93,21 +95,21 @@ public class AccountMapperTests
 
 		assertEquals(1L, accountDTOList.get(0).getAccountNumber());
 		assertEquals(100, accountDTOList.get(0).getAmount());
-		assertEquals("Vadim", accountDTOList.get(0).getUserDTOLight().getFirstname());
+		assertEquals("Vadim", accountDTOList.get(0).getUserDTOLite().getFirstname());
 
 		assertEquals(2L, accountDTOList.get(1).getAccountNumber());
 		assertEquals(200, accountDTOList.get(1).getAmount());
-		assertEquals("Vadim", accountDTOList.get(1).getUserDTOLight().getFirstname());
+		assertEquals("Vadim", accountDTOList.get(1).getUserDTOLite().getFirstname());
 	}
 
 	@Test
 	@DisplayName("List of AccountDTO should be correctly mapped to List of Account")
 	public void canBeMappedToAccountList()
 	{
-		UserDTOLight userDTOLight = new UserDTOLight("Vadim", "Zaytsev", "chevek", "1");
+		UserDTOLite userDTOLite = new UserDTOLite("Vadim", "Zaytsev", "chevek", "1");
 
-		AccountDTO accDTO1 = new AccountDTO(userDTOLight, 1L, 100);
-		AccountDTO accDTO2 = new AccountDTO(userDTOLight, 2L, 200);
+		AccountDTO accDTO1 = new AccountDTO(userDTOLite, 1L, 100);
+		AccountDTO accDTO2 = new AccountDTO(userDTOLite, 2L, 200);
 
 		List<Account> accountList = accountMapper.DTOsToAccounts(List.of(accDTO1, accDTO2));
 
@@ -129,8 +131,8 @@ public class AccountMapperTests
 		User user = new User("Vadim", "Zaytsev", "chevek", "1", new HashSet<>());
 		Account account = new Account(user, 1L, 100);
 
-		UserDTOLight userDTOLight = new UserDTOLight("Vadim", "Zaytsev", "chevek", "1");
-		AccountDTO accountDTO = new AccountDTO(userDTOLight, 1L, 200);
+		UserDTOLite userDTOLite = new UserDTOLite("Vadim", "Zaytsev", "chevek", "1");
+		AccountDTO accountDTO = new AccountDTO(userDTOLite, 1L, 200);
 
 		accountMapper.updateAccountFromDTO(accountDTO, account);
 

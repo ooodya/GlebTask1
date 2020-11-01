@@ -19,13 +19,13 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="account : ${userDTO.getAccountDTOLights()}">
+    <tr th:each="account : ${userDTO.getAccountDTOLites()}">
         <td width="200"><span th:text="${account.getAccountNumber()}"></span></td>
         <td width="200"><span th:text="${account.getAmount()}"></span></td>
         <td>
             <form th:action="@{/chooseAccount}" method="POST">
                 <input type="hidden" name="accountNumber" id="accountNumber" th:value="${account.getAccountNumber()}"/>
-                <input type="submit" value="Choose account"></input>
+                <input type="submit" value="Choose account"/>
             </form>
         </td>
     </tr>

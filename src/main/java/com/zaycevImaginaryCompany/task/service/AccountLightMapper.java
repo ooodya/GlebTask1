@@ -1,13 +1,13 @@
 package com.zaycevImaginaryCompany.task.service;
 
 import com.zaycevImaginaryCompany.task.domain.Account;
-import com.zaycevImaginaryCompany.task.domain.AccountDTOLight;
+import com.zaycevImaginaryCompany.task.dto.AccountDTOLite;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface AccountLightMapper
 {
-    AccountDTOLight accountToDTOLight(Account acc);
+    AccountDTOLite accountToDTOLight(Account acc);
 
-    Account DTOtoAccount(AccountDTOLight accountDTOLight);
+    Account DTOtoAccount(AccountDTOLite accountDTOLite);
 }

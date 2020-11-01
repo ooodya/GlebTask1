@@ -1,9 +1,9 @@
 package com.zaycevImaginaryCompany.task.controller;
 
-import com.zaycevImaginaryCompany.task.domain.AccountDTO;
-import com.zaycevImaginaryCompany.task.domain.UserDTO;
-import com.zaycevImaginaryCompany.task.security.SecurityService;
+import com.zaycevImaginaryCompany.task.dto.AccountDTO;
+import com.zaycevImaginaryCompany.task.dto.UserDTO;
 import com.zaycevImaginaryCompany.task.service.AccountCreator;
+import com.zaycevImaginaryCompany.task.service.BusinessUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.zaycevImaginaryCompany.task.service.AccountCRUDService;
-import com.zaycevImaginaryCompany.task.service.UserCRUDService;
 
 @Controller
 public class UserAccountsController
@@ -21,19 +20,15 @@ public class UserAccountsController
 	private AccountCRUDService accountCRUDService;
 	
 	@Autowired
-	private UserCRUDService userCRUDService;
-
-	@Autowired
 	private AccountCreator accountCreator;
 
 	@Autowired
-	private SecurityService securityService;
+	private BusinessUserService businessUserService;
 
 	@GetMapping("/userAccounts")
 	public String getUserAccounts(Model model)
 	{
-		String username = securityService.getLoggedUsername();
-		final UserDTO userDTO = userCRUDService.findByUsername(username).orElse(null);
+		final UserDTO userDTO = businessUserService.findLoggedUser();
 		model.addAttribute("userDTO", userDTO);
 		return "userAccounts";
 	}

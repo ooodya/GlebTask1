@@ -1,7 +1,7 @@
 package com.zaycevImaginaryCompany.task.service;
 
-import com.zaycevImaginaryCompany.task.domain.AccountDTO;
-import com.zaycevImaginaryCompany.task.domain.UserDTO;
+import com.zaycevImaginaryCompany.task.dto.AccountDTO;
+import com.zaycevImaginaryCompany.task.dto.UserDTO;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -44,7 +44,7 @@ class AccountCreatorImplTests
     {
         final UserDTO updatedUserDTO = accountCreator.createAccount("username");
 
-        assertEquals(1, updatedUserDTO.getAccountDTOLights().size());
+        assertEquals(1, updatedUserDTO.getAccountDTOLites().size());
 
         final List<AccountDTO> allAccounts = accountCRUDService.findAll();
 
